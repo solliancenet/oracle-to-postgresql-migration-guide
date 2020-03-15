@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "30fc406c-c745-44f0-be2d-63b1c860cde0"
+        },
+        "appName" : {
+            "value": "ora-2-psql-web"
+        }, 
+        "name": {
+            "value": null
+        },
+        "keyVaultName" : {
+            "value": null
+        },
+        "location": {
+            "value": "West US"
+        },
+        "hostingEnvironment": {
+            "value": ""
+        },
+        "hostingPlanName": {
+            "value": "ASP-ora2psql-9425"
+        },
+        "serverFarmResourceGroup": {
+            "value": "ora-2-psql"
+        },
+        "alwaysOn": {
+            "value": false
+        },
+        "sku": {
+            "value": "Free"
+        },
+        "skuCode": {
+            "value": "F1"
+        },
+        "workerSize": {
+            "value": "0"
+        },
+        "workerSizeId": {
+            "value": "0"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "linuxFxVersion": {
+            "value": "JAVA|11-java11"
+        }
+    }
+}

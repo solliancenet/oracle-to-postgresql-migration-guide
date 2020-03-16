@@ -11,13 +11,19 @@ import { MatCardModule} from '@angular/material/card';
 import { MatInputModule} from '@angular/material/input';
 import { MatListModule} from '@angular/material/list';
 import { MatToolbarModule} from '@angular/material/toolbar';
+import { SessionsComponent } from './sessions/sessions.component';
+import { SpeakerComponent } from './speaker/speaker.component';
+import { RegisteredAttendeesDashboardComponent } from './registered-attendees-dashboard/registered-attendees-dashboard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    EventDashboardComponent
+    EventDashboardComponent,
+    SessionsComponent,
+    SpeakerComponent,
+    RegisteredAttendeesDashboardComponent
   ],
   imports: [
     BrowserModule,

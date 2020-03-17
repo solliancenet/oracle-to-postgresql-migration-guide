@@ -2,10 +2,7 @@ package com.yourcompany.conferencedemo.controllers;
 
 import com.yourcompany.conferencedemo.models.Session;
 import com.yourcompany.conferencedemo.repositories.SessionRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,18 @@ public class SessionController {
     @GetMapping
     public List<Session> getSessions() {
         return sessionRepository.findAll();
+    }
+
+
+    @GetMapping("/events/{id}")
+    public List<Session> getSessionsByEventId(@PathVariable Long id) {
+        return sessionRepository.findByEventId(id);
+    }
+
+
+    @GetMapping("/{id}")
+    public Session getSessionsById(@PathVariable Long id) {
+        return sessionRepository.findById(id).orElseThrow();
     }
 
 }

@@ -3,10 +3,7 @@ package com.yourcompany.conferencedemo.controllers;
 
 import com.yourcompany.conferencedemo.models.Registration;
 import com.yourcompany.conferencedemo.repositories.RegistrationRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,4 +24,10 @@ public class RegistrationController {
         return registrationRepository.findAll();
     }
 
+
+    @PostMapping("")
+    public Registration add(@RequestBody Registration registration) {
+        registrationRepository.registerAttendee(registration.getSessionId(), registration.getAttendeeId());
+        return registration;
+    }
 }

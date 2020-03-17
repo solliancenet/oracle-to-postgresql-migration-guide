@@ -3,10 +3,7 @@ package com.yourcompany.conferencedemo.controllers;
 
 import com.yourcompany.conferencedemo.models.Speaker;
 import com.yourcompany.conferencedemo.repositories.SpeakerRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,11 @@ public class SpeakerController {
     @GetMapping
     public List<Speaker> getSpeakers() {
         return speakerRepository.findAll();
+    }
+
+
+    @GetMapping("/{id}")
+    public Speaker getSpeaker(@PathVariable Long id) {
+        return speakerRepository.findById(id).orElseThrow();
     }
 }

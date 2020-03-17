@@ -18,7 +18,6 @@ public class AttendeeController  {
     private final AttendeeRepository attendeeRepository;
 
     public AttendeeController(AttendeeRepository attendeeRepository) {
-
         this.attendeeRepository = attendeeRepository;
     }
 
@@ -26,5 +25,10 @@ public class AttendeeController  {
     @GetMapping
     public List<Attendee> getAttendees() {
         return attendeeRepository.findAll();
+    }
+
+    @GetMapping("/randomAttendee")
+    public Attendee getRandomAttendInfo () {
+        return null;
     }
 }

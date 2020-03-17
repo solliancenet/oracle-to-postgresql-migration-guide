@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity(name="VW_ATTENDEE_SESSIONS")
+@Entity(name="V_ATTENDEE_SESSIONS")
 public class AttendeeSession {
 
 

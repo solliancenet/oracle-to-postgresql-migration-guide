@@ -25,8 +25,8 @@ public class RegistrationController {
     }
 
 
-    @PostMapping("")
-    public Registration add(@RequestBody Registration registration) {
+    @PostMapping
+    public Registration addRegistration(@RequestBody Registration registration) {
         registrationRepository.registerAttendee(registration.getSessionId(), registration.getAttendeeId());
         return registration;
     }

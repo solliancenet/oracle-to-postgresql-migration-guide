@@ -62,13 +62,13 @@
             },
             "properties": {
                 "name": "[variables('appName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
                 "hostingEnvironment": "",
                 "clientAffinityEnabled": false,
                 "alwaysOn": true
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+                "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
             ]
         },
         {
@@ -76,16 +76,15 @@
             "name": "appsettings",
             //...
             "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults/', variables('keyVaultName'))]",
-                "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('storageConnectionStringName'))]",
-                "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('keyVaultName'), variables('appInsightsKeyName'))]"
+                "[resourceId('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
+                "[resourceId('Microsoft.KeyVault/vaults/secrets', parameters('keyVaultName'), 'yourdept-regapp-password')]",
+                "[resourceId('Microsoft.KeyVault/vaults/secrets', parameters('keyVaultName'), 'yourdept-regapp-username')]",
+                "[resourceId('Microsoft.KeyVault/vaults/secrets', parameters('keyVaultName'), 'yourdept-regapp-connection-url')]"
             ],
             "properties": {
-                "AzureWebJobsStorage": "[concat('@Microsoft.KeyVault(SecretUri=', reference(variables('storageConnectionStringResourceId')).secretUriWithVersion, ')')]",
-                "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('@Microsoft.KeyVault(SecretUri=', reference(variables('storageConnectionStringResourceId')).secretUriWithVersion, ')')]",
-                "APPINSIGHTS_INSTRUMENTATIONKEY": "[concat('@Microsoft.KeyVault(SecretUri=', reference(variables('appInsightsKeyResourceId')).secretUriWithVersion, ')')]",
-                "WEBSITE_ENABLE_SYNC_UPDATE_SITE": "true"
-                //...
+                "ConnectionUrl": "[concat('@Microsoft.KeyVault(SecretUri=', reference('yourdept-regapp-connection-url').secretUriWithVersion, ')')]",
+                "UserName": "[concat('@Microsoft.KeyVault(SecretUri=', reference('yourdept-regapp-username').secretUriWithVersion, ')')]",
+                "Password": "[concat('@Microsoft.KeyVault(SecretUri=', reference('yourdept-regapp-password').secretUriWithVersion, ')')]"
             }
         },
         {

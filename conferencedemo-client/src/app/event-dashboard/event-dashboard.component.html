@@ -1,4 +1,22 @@
 <p>event-dashboard works!</p>
-<pre>
+<!--<pre>
   {{conferenceEvents | json}}
-</pre>
+</pre> -->
+
+
+<div class="container" *ngFor="let event of conferenceEvents">
+  <div id="img" class="img"></div>
+  <div style="float: right;"></div>
+  <div id="evName" class="content">{{event.eventName}}</div>
+  <div style="clear: both;"></div>
+  <div id="desc" class="desc">{{event.eventDescription}}</div>
+  <div style="clear: both;"></div>
+  <div class="content">{{event.eventStartDate}}</div>
+  <div class="content">{{event.eventEndDate}}</div>
+  <div class="content">{{event.eventPrice}}</div>
+  <div style="clear: both;"></div>
+  <div> Price</div>
+</div>
+
+
+

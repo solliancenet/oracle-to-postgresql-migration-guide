@@ -1,22 +1,39 @@
-<p>event-dashboard works!</p>
-<!--<pre>
+<!-- <pre>
   {{conferenceEvents | json}}
 </pre> -->
 
 
-<div class="container" *ngFor="let event of conferenceEvents">
-  <div id="img" class="img"></div>
-  <div style="float: right;"></div>
-  <div id="evName" class="content">{{event.eventName}}</div>
-  <div style="clear: both;"></div>
-  <div id="desc" class="desc">{{event.eventDescription}}</div>
-  <div style="clear: both;"></div>
-  <div class="content">{{event.eventStartDate}}</div>
-  <div class="content">{{event.eventEndDate}}</div>
-  <div class="content">{{event.eventPrice}}</div>
-  <div style="clear: both;"></div>
-  <div> Price</div>
+
+<div class="container">
+  <div class="section-white">
+    <div>
+      <h1>Events</h1>
+      <p><strong> Listed below are Events titles </strong></p>
+    </div>
+  </div>
+
+  <div class="row" style="border: 1px solid gray; margin-bottom:10px;" *ngFor="let event of conferenceEvents">
+    <div class="col-lg-12">
+      <div class="col-4 col-sm-3 col-md-3" style="float: left;">
+        <div class="img_box_200">
+
+          <img src="/assets/images/EventMultipleProducts.jpg" /> {{event.eventPic}}
+
+        </div>
+      </div>
+
+      <h2 style="color: #0067b8;">{{event.eventName}}</h2>
+      <p style="font-size: 14px;"> Start Date: {{event.eventStartDate  | date :'d MMM, yyyy h:mm a'}} - End Date:
+        {{event.eventEndDate  | date :'d MMM, yyyy h:mm a'}}</p>
+
+      <div class="track ng-scope DEV">
+        {{event.eventDescription}}
+      </div>
+
+      <p class="Price" style="text-align: left;">Price: {{event.eventPrice}}</p>
+
+    </div>
+  </div>
+
+
 </div>
-
-
-

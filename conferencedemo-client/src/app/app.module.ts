@@ -13,6 +13,7 @@ import { MatListModule} from '@angular/material/list';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { SessionsComponent } from './sessions/sessions.component';
 import { SpeakerComponent } from './speaker/speaker.component';
+import {SessionSpeakerComponent} from './session-speaker/session-speaker.component'
 import { RegisteredAttendeesDashboardComponent } from './registered-attendees-dashboard/registered-attendees-dashboard.component';
 
 
@@ -23,6 +24,7 @@ import { RegisteredAttendeesDashboardComponent } from './registered-attendees-da
     EventDashboardComponent,
     SessionsComponent,
     SpeakerComponent,
+    SessionSpeakerComponent,
     RegisteredAttendeesDashboardComponent
   ],
   imports: [

@@ -2,40 +2,43 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Event} from '../models/Event';
+import { SessionSpeaker } from '../models/session-speaker';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EventService {
+
+export class SessionSpeakerService {
 
   constructor(
     private http: HttpClient
-    ) { }
+  ) { }
 
-  getEvents(): Observable<Event[]> {
+  getSessionSpeaker(eventId: number): Observable<SessionSpeaker[]> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': 'GET'
       })
     };
 
-    return this.http.get<Event[]>(`${environment.webApiUrl}/events`, httpOptions)
+    return this.http.get<SessionSpeaker[]>(`${environment.webApiUrl}/sessionSpeakers/${eventId}`, httpOptions)
       .pipe(
         map(data => {
           return data
         }),
         catchError(data => {
           if (data instanceof HttpErrorResponse && data.status === 404) {
-              return [];
-            } else {
-              this.handleError(data);
-            }
+            return [];
+          } else {
+            this.handleError(data);
+          }
         })
       );
   }
+
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

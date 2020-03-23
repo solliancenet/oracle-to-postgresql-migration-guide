@@ -9,10 +9,10 @@
             "value": "ora-2-psql-web"
         }, 
         "name": {
-            "value": null
+            "value": "ora2psqlWeb"
         },
         "keyVaultName" : {
-            "value": null
+            "value": "ora2psqlVault"
         },
         "location": {
             "value": "West US"

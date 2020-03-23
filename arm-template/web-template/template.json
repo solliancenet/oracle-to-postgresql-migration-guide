@@ -72,9 +72,8 @@
             ]
         },
         {
-            "type": "config",
+            "type":"Microsoft.ApiManagement/service/properties",
             "name": "appsettings",
-            //...
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
                 "[resourceId('Microsoft.KeyVault/vaults/secrets', parameters('keyVaultName'), 'yourdept-regapp-password')]",

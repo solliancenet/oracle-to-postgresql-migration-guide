@@ -3,10 +3,7 @@ package com.yourcompany.conferencedemo.controllers;
 
 import com.yourcompany.conferencedemo.models.Attendee;
 import com.yourcompany.conferencedemo.repositories.AttendeeRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,13 @@ public class AttendeeController  {
 
     @GetMapping("/randomAttendee")
     public Attendee getRandomAttendInfo () {
-        return null;
+        Long attendeeId =  attendeeRepository.getRandomAttendee();
+        return this.attendeeRepository.findById(attendeeId).orElseThrow();
+    }
+
+
+    @GetMapping("/{id}")
+    public Attendee getAttendee(@PathVariable Long id) {
+        return this.attendeeRepository.findById(id).orElseThrow();
     }
 }

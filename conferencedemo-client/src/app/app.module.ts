@@ -1,20 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ControlContainer, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { EventDashboardComponent } from './event-dashboard/event-dashboard.component';
-import { MatButtonModule} from '@angular/material/button';
-import { MatCardModule} from '@angular/material/card';
-import { MatInputModule} from '@angular/material/input';
-import { MatListModule} from '@angular/material/list';
-import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { SessionsComponent } from './sessions/sessions.component';
 import { SpeakerComponent } from './speaker/speaker.component';
-import {SessionSpeakerComponent} from './session-speaker/session-speaker.component'
+import { SessionSpeakerComponent } from './session-speaker/session-speaker.component'
 import { RegisteredAttendeesDashboardComponent } from './registered-attendees-dashboard/registered-attendees-dashboard.component';
+import { RegisterAttendeesComponent } from './register-attendees/Register-Attendees.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { RegisteredAttendeesDashboardComponent } from './registered-attendees-da
     SessionsComponent,
     SpeakerComponent,
     SessionSpeakerComponent,
-    RegisteredAttendeesDashboardComponent
+    RegisteredAttendeesDashboardComponent,
+    RegisterAttendeesComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { RegisteredAttendeesDashboardComponent } from './registered-attendees-da
     MatCardModule,
     MatInputModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

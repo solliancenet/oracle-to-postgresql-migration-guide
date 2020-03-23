@@ -21,7 +21,7 @@
                         
                         <p class="session-abstract"> {{speaker.sessionDescription}}</p>
                         <div style="clear: both;"></div>
-                        <span style="float: right;"><button type="submit" style="margin-bottom: 10px;"
+                        <span style="float: right;"><button type="submit" [routerLink]="['/registration', speaker.sessionId]" style="margin-bottom: 10px;"
                                 class="btn btn-primary">Register Here..</button></span>
                     </li>
                 </ul>

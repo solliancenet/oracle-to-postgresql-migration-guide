@@ -12,27 +12,28 @@ import { Event } from '../models/Event';
 })
 export class SessionSpeakerComponent implements OnInit, OnDestroy {
 
-  conferenceSessionsSpeaker: SessionSpeaker[] = [];
-  
+  conferenceSessionsSpeakers: SessionSpeaker[] = [];
+  attendeeId: number = +sessionStorage.getItem('loggedInAttendeeId');
+
   event: Event;
-  eventId: any;
+  eventId: number;
 
   constructor(private route: ActivatedRoute, private sessionSpeakerService: SessionSpeakerService, private eventService: EventService) { }
 
   ngOnInit(): void {
-    
+
     this.route.params.subscribe(params => {
       this.eventId = +params['eventId'];
     });
 
-    
+
     this.sessionSpeakerService.getSessionSpeaker(this.eventId).subscribe(data => {
-      this.conferenceSessionsSpeaker = data;
+      this.conferenceSessionsSpeakers = data;
     });
 
     this.eventService.getEvents().subscribe(data => {
       if (data.length > 0) {
-        this.event = data.filter(a => a.id == this.eventId)[0];
+        this.event = data.filter(a => a.id === this.eventId)[0];
       }
       else {
         this.event = null;

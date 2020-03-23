@@ -1,16 +1,6 @@
 --------------------------------------------------------
---  File created - Monday-March-16-2020   
+--  File created - Monday-March-23-2020   
 --------------------------------------------------------
-DROP SEQUENCE "REG_APP"."DBOBJECTID_SEQUENCE";
-DROP SEQUENCE "REG_APP"."REGISTRATION_ID_SEQ";
-DROP TABLE "REG_APP"."ATTENDEES" cascade constraints;
-DROP TABLE "REG_APP"."EVENTS" cascade constraints;
-DROP TABLE "REG_APP"."REGISTRATIONS" cascade constraints;
-DROP TABLE "REG_APP"."SESSIONS" cascade constraints;
-DROP TABLE "REG_APP"."SPEAKERS" cascade constraints;
-DROP VIEW "REG_APP"."V_ATTENDEE_SESSIONS";
-DROP VIEW "REG_APP"."V_SPK_SESSION";
-DROP PROCEDURE "REG_APP"."REGISTER_ATTENDEE_SESSION";
 --------------------------------------------------------
 --  DDL for Sequence DBOBJECTID_SEQUENCE
 --------------------------------------------------------
@@ -359,6 +349,29 @@ END;
 /
 ALTER TRIGGER "REG_APP"."TRG_REGISRATION_ID" ENABLE;
 --------------------------------------------------------
+--  DDL for Procedure GET_RANDOM_ATTENDEE
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE PROCEDURE "REG_APP"."GET_RANDOM_ATTENDEE" (p_attendeeid OUT NUMBER) AS
+BEGIN
+    SELECT
+        id into p_attendeeid
+    FROM
+        (
+            SELECT
+                id
+            FROM
+                attendees
+            ORDER BY
+                dbms_random.value
+        )
+    WHERE
+        ROWNUM = 1;  
+END get_random_attendee;
+
+/
+--------------------------------------------------------
 --  DDL for Procedure REGISTER_ATTENDEE_SESSION
 --------------------------------------------------------
 set define off;
@@ -379,6 +392,47 @@ END REGISTER_ATTENDEE_SESSION;
 
 /
 --------------------------------------------------------
+--  DDL for Package UTILITY_SCRIPTS
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "REG_APP"."UTILITY_SCRIPTS" AS 
+    PROCEDURE create_pg_table_script;
+
+END UTILITY_SCRIPTS;
+
+/
+--------------------------------------------------------
+--  DDL for Package Body UTILITY_SCRIPTS
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE BODY "REG_APP"."UTILITY_SCRIPTS" AS
+  PROCEDURE create_pg_table_script AS
+    
+        CURSOR c_tables IS
+            SELECT
+                table_name
+            FROM
+                user_tables
+            ORDER BY 
+                table_name;
+            
+        r_table c_tables%rowtype;
+    BEGIN
+            OPEN c_tables;
+            LOOP
+                FETCH c_tables INTO r_table;
+                EXIT WHEN c_tables%notfound;
+                -- DBMS_OUTPUT.PUT_LINE( 'if not exist "schema/tables/' || r_table.table_name || '" mkdir "schema/tables/"' || r_table.table_name || '"');
+                DBMS_OUTPUT.PUT_LINE( 'ora2pg -p -t TABLE -a ' || r_table.table_name || ' -o ' || r_table.table_name || '.sql --namespace REG_APP -c config/ora2pg_dist-my-migration-test.conf' );
+            END LOOP;
+            CLOSE c_tables;
+    
+    
+    END create_pg_table_script;
+END UTILITY_SCRIPTS;
+
+/
+--------------------------------------------------------
 --  Constraints for Table REGISTRATIONS
 --------------------------------------------------------
 
@@ -391,27 +445,6 @@ END REGISTER_ATTENDEE_SESSION;
   ALTER TABLE "REG_APP"."REGISTRATIONS" MODIFY ("SESSION_ID" NOT NULL ENABLE);
   ALTER TABLE "REG_APP"."REGISTRATIONS" MODIFY ("REGISTRATION_DATE" NOT NULL ENABLE);
   ALTER TABLE "REG_APP"."REGISTRATIONS" MODIFY ("ID" NOT NULL ENABLE);
---------------------------------------------------------
---  Constraints for Table ATTENDEES
---------------------------------------------------------
-
-  ALTER TABLE "REG_APP"."ATTENDEES" ADD CONSTRAINT "ATTENDEES_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "SYSTEM"  ENABLE;
---------------------------------------------------------
---  Constraints for Table SPEAKERS
---------------------------------------------------------
-
-  ALTER TABLE "REG_APP"."SPEAKERS" ADD CONSTRAINT "SPEAKERS_PK" PRIMARY KEY ("ID")
-  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
-  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
-  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
-  TABLESPACE "SYSTEM"  ENABLE;
-  ALTER TABLE "REG_APP"."SPEAKERS" MODIFY ("LAST_NAME" NOT NULL ENABLE);
-  ALTER TABLE "REG_APP"."SPEAKERS" MODIFY ("FIRST_NAME" NOT NULL ENABLE);
-  ALTER TABLE "REG_APP"."SPEAKERS" MODIFY ("ID" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Constraints for Table SESSIONS
 --------------------------------------------------------
@@ -437,6 +470,27 @@ END REGISTER_ATTENDEE_SESSION;
   ALTER TABLE "REG_APP"."EVENTS" MODIFY ("EVENT_START_DATE" NOT NULL ENABLE);
   ALTER TABLE "REG_APP"."EVENTS" MODIFY ("EVENT_NAME" NOT NULL ENABLE);
   ALTER TABLE "REG_APP"."EVENTS" MODIFY ("ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table ATTENDEES
+--------------------------------------------------------
+
+  ALTER TABLE "REG_APP"."ATTENDEES" ADD CONSTRAINT "ATTENDEES_PK" PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table SPEAKERS
+--------------------------------------------------------
+
+  ALTER TABLE "REG_APP"."SPEAKERS" ADD CONSTRAINT "SPEAKERS_PK" PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "REG_APP"."SPEAKERS" MODIFY ("LAST_NAME" NOT NULL ENABLE);
+  ALTER TABLE "REG_APP"."SPEAKERS" MODIFY ("FIRST_NAME" NOT NULL ENABLE);
+  ALTER TABLE "REG_APP"."SPEAKERS" MODIFY ("ID" NOT NULL ENABLE);
 --------------------------------------------------------
 --  Ref Constraints for Table REGISTRATIONS
 --------------------------------------------------------

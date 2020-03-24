@@ -7,6 +7,7 @@ export interface SessionSpeaker {
     sessionDescription: string,
     sessionDate: string,
     duration: number,
-    eventId: number
+    eventId: number,
+    isRegistered: boolean
 }
 

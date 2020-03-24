@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
   <div class="row">
     <div class="col-2 text-left">
-    <h1 class="mr-3">Register for a great event!</h1>
-  </div>
-  <div class="col-10 text-right">
+      <a href="" [routerLink]="['/event-dashboard']">
+        <h1 class="mr-3" style="color: white;">Register for a great event!</h1>
+      </a>
+    </div>
+    <div class="col-10 text-right">
       Weclome {{ attendee.firstName + " " + attendee.lastName }}
+    </div>
   </div>
-</div>
 </mat-toolbar>
 <router-outlet></router-outlet>

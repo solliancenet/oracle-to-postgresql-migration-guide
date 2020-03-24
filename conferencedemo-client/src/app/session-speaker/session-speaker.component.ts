@@ -4,6 +4,8 @@ import { SessionSpeakerService } from '../services/sessionspeaker.service';
 import { SessionSpeaker } from '../models/session-speaker';
 import { EventService } from '../services/event.service';
 import { Event } from '../models/Event';
+import { RegisterAttendeesService } from '../services/register-attendees.service';
+import { Registration } from '../models/registration';
 
 @Component({
   selector: 'app-session-speaker',
@@ -15,10 +17,15 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   conferenceSessionsSpeakers: SessionSpeaker[] = [];
   attendeeId: number = +sessionStorage.getItem('loggedInAttendeeId');
 
+
   event: Event;
   eventId: number;
+  registration: Registration;
+  registrationReponse: Registration[] = [];
+  isSuccess: boolean;
 
-  constructor(private route: ActivatedRoute, private sessionSpeakerService: SessionSpeakerService, private eventService: EventService) { }
+  constructor(private route: ActivatedRoute, private sessionSpeakerService: SessionSpeakerService, private eventService: EventService,
+    private registerAttendeesService: RegisterAttendeesService) { }
 
   ngOnInit(): void {
 
@@ -39,6 +46,29 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
         this.event = null;
       }
     });
+  }
+
+  // Post Registration Method (Called on Button Click)
+  postRegistration(sessionId: number) {
+    this.registration = new Registration();
+    this.registration.attendeeId = this.attendeeId;
+    this.registration.sessionId = sessionId;
+
+    this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
+
+      this.registrationReponse = data;
+     
+      if (data != null) {
+        this.isSuccess = true;
+        let sessionSpeaker = this.conferenceSessionsSpeakers.filter(a=> a.sessionId==this.registration.sessionId)[0];
+        sessionSpeaker.isRegistered=true;
+
+      }
+      else {
+        this.isSuccess = false;
+      }
+    });
+
   }
 
 

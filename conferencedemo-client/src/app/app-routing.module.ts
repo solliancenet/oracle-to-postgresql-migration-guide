@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'registration', component: RegisterAttendeesComponent },
   { path: '', redirectTo: 'event-dashboard', pathMatch: 'full' },
   { path: 'sessionspeaker/:eventId', component: SessionSpeakerComponent },  
-  //{ path: 'sessionspeaker/:sessionId', component: SessionSpeakerComponent },  
+ // { path: 'sessionspeaker/:sessionId', component: SessionSpeakerComponent },  
   { path: '', component: EventDashboardComponent }
 ];
 

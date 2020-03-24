@@ -1,6 +1,6 @@
 
 
-export interface Registration {
+export class Registration {
   id:               number;
   registrationDate: string;
   sessionId:        number;

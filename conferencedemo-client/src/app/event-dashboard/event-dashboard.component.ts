@@ -11,7 +11,9 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
 
   conferenceEvents: Event[] = [];
 
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService
+  ) { }
 
 
   ngOnInit(): void {

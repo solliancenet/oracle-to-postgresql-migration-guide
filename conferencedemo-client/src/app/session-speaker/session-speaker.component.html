@@ -14,7 +14,8 @@
                         <h1><span
                                 style="color:#19647E; text-transform: uppercase;">{{conferenceSessionsSpeaker.sessionName}}</span>
                         </h1>
-                        <p><span style="color:#19647E; text-transform: uppercase;">
+                        <p><span style="color:#19647E; text-transform: uppercase; cursor: pointer;" 
+                            [routerLink]="['/speaker', conferenceSessionsSpeaker.speakerId]">
                                 {{conferenceSessionsSpeaker.firstName}} {{conferenceSessionsSpeaker.lastName}} </span>
                         </p>
                         <p><span style="color:#19647E; text-transform: uppercase;">Date:

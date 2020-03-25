@@ -54,6 +54,7 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
 
   // Submitting Registeration Data
   submitRegister() {
+    this.validateAllFormFields(this.myform);
     if (this.myform.valid) {
       /// Posting to Attendee.
       this.registerAttendeesService.postAttendee(this.myform.value).subscribe(data => {
@@ -71,7 +72,6 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
       }
     }
     else {
-      debugger;
       this.validateAllFormFields(this.myform); ///
     }
   }
@@ -102,11 +102,11 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
   ///
   validateAllFormFields(formGroup: FormGroup) {         
   Object.keys(formGroup.controls).forEach(field => {  
-    const control = formGroup.get(field);             //{3}
-    if (control instanceof FormControl) {             //{4}
+    const control = formGroup.get(field);            
+    if (control instanceof FormControl) {             
       control.markAsTouched({ onlySelf: true });
-    } else if (control instanceof FormGroup) {        //{5}
-      this.validateAllFormFields(control);            //{6}
+    } else if (control instanceof FormGroup) {        
+      this.validateAllFormFields(control);           
     }
   });
 }

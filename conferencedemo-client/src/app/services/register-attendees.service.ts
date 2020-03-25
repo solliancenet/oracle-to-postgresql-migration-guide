@@ -16,6 +16,30 @@ export class RegisterAttendeesService {
     private http: HttpClient
   ) { }
 
+  // Get all Attendees 
+  getAttendees(): Observable<Attendee[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': 'GET'
+      })
+    };
+
+    return this.http.get<Attendee[]>(`${environment.webApiUrl}/attendees`, httpOptions)
+      .pipe(
+        map(data => {
+          return data
+        }),
+        catchError(data => {
+          if (data instanceof HttpErrorResponse && data.status === 404) {
+              return [];
+            } else {
+              this.handleError(data);
+            }
+        })
+      );
+  }
+
   // Posting Attendee (Who) Detail before session Registration
   postAttendee(attendee: Attendee): Observable<Attendee[]> {
     const httpOptions = {

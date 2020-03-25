@@ -4,6 +4,8 @@ import { EventDashboardComponent } from './event-dashboard/event-dashboard.compo
 import { SessionsComponent } from './sessions/sessions.component';
 import { SessionSpeakerComponent } from './session-speaker/session-speaker.component';
 import { RegisterAttendeesComponent } from './register-attendees/Register-Attendees.component';
+import { RegisteredAttendeesDashboardComponent } from './registered-attendees-dashboard/registered-attendees-dashboard.component';
+import { SpeakerComponent } from './speaker/speaker.component'
 
 
 const routes: Routes = [
@@ -12,8 +14,10 @@ const routes: Routes = [
   { path: 'registration/:sessionId', component: RegisterAttendeesComponent },
   { path: 'registration', component: RegisterAttendeesComponent },
   { path: '', redirectTo: 'event-dashboard', pathMatch: 'full' },
-  { path: 'sessionspeaker/:eventId', component: SessionSpeakerComponent },  
- // { path: 'sessionspeaker/:sessionId', component: SessionSpeakerComponent },  
+  { path: 'sessionspeaker/:eventId', component: SessionSpeakerComponent },
+  { path: 'attendees', component: RegisteredAttendeesDashboardComponent },
+  { path: 'speaker/:speakerId', component: SpeakerComponent },
+  // { path: 'sessionspeaker/:sessionId', component: SessionSpeakerComponent },  
   { path: '', component: EventDashboardComponent }
 ];
 

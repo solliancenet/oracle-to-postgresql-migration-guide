@@ -9,13 +9,13 @@ import { Attendee} from '../models/attendee';
 })
 export class RegisteredAttendeesDashboardComponent implements OnInit, OnDestroy {
 
-  dtattendee: Attendee[] = [];
+  attendees: Attendee[] = [];
 
   constructor(private registerAttendeeService: RegisterAttendeesService) { }
 
   ngOnInit(): void {
-    this.registerAttendeeService.getAttendees().subscribe(data => {     
-      this.dtattendee = data;
+    this.registerAttendeeService.getAttendees().subscribe(data => {
+      this.attendees = data;
     });
   }
 

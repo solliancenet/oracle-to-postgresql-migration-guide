@@ -23,6 +23,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   registration: Registration;
   registrationReponse: Registration[] = [];
   isSuccess: boolean;
+  currentDate: any;
 
   constructor(private route: ActivatedRoute, private sessionSpeakerService: SessionSpeakerService, private eventService: EventService,
     private registerAttendeesService: RegisterAttendeesService) { }
@@ -53,7 +54,8 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
     this.registration = new Registration();
     this.registration.attendeeId = this.attendeeId;
     this.registration.sessionId = sessionId;
-
+    this.currentDate=new Date();
+    
     this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
 
       this.registrationReponse = data;
@@ -67,6 +69,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
       else {
         this.isSuccess = false;
       }
+      
     });
 
   }

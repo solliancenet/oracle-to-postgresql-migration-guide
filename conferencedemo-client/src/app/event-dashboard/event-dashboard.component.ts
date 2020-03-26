@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EventService } from '../services/event.service';
 import { Event} from '../models/Event';
 
@@ -10,15 +11,18 @@ import { Event} from '../models/Event';
 export class EventDashboardComponent implements OnInit, OnDestroy {
 
   conferenceEvents: Event[] = [];
+  imgEvent: SafeResourceUrl;
 
   constructor(
-    private eventService: EventService
+    private eventService: EventService,
+    private _sanitizer: DomSanitizer
   ) { }
 
 
   ngOnInit(): void {
     this.eventService.getEvents().subscribe(data => {
         this.conferenceEvents = data;
+        //this.imgEvent = this._sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64, " + data[0].eventPic);
     });
 
   }

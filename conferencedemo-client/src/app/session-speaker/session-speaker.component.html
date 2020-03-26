@@ -14,13 +14,13 @@
                         <h1><span
                                 style="color:#19647E; text-transform: uppercase;">{{conferenceSessionsSpeaker.sessionName}}</span>
                         </h1>
-                        <p><span style="color:#19647E; text-transform: uppercase; cursor: pointer;"
-                                [routerLink]="['/speaker', conferenceSessionsSpeaker.speakerId]">
+                        <p><span style="color:#19647E; text-transform: uppercase; cursor: pointer;" 
+                            [routerLink]="['/speaker', conferenceSessionsSpeaker.speakerId]">
                                 {{conferenceSessionsSpeaker.firstName}} {{conferenceSessionsSpeaker.lastName}} </span>
                         </p>
                         <p><span style="color:#19647E; text-transform: uppercase;">Date:
                                 {{conferenceSessionsSpeaker.sessionDate  | date :'d MMM, yyyy h:mm a'}} Duration:
-                                {{conferenceSessionsSpeaker.duration}} minutes</span></p>
+                                {{conferenceSessionsSpeaker.duration}} minutes </span></p>
 
 
                         <p class="session-abstract"> {{conferenceSessionsSpeaker.sessionDescription}} </p>

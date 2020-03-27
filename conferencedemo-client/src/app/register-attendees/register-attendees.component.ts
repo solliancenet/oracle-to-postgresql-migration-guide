@@ -43,7 +43,6 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private registerAttendeesService: RegisterAttendeesService) { }
 
   ngOnInit(): void {
-
     this.route.params.subscribe(params => {
       this.sessionId = +params['sessionId'];
     });
@@ -63,12 +62,7 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
 
       // Posting to Registration
       if (this.dtAttendee != null) {
-        // {{ CurrentDate | date: 'dd/MM/yyyy' }}
-
-        //this.reg.
-
         this.registerAttendeesService.postRegistration(null);
-
       }
     }
     else {
@@ -92,7 +86,6 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
   // Form
   createForm() {
     this.myform = new FormGroup({
-
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email
@@ -100,16 +93,16 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
   }
 
   ///
-  validateAllFormFields(formGroup: FormGroup) {         
-  Object.keys(formGroup.controls).forEach(field => {  
-    const control = formGroup.get(field);            
-    if (control instanceof FormControl) {             
-      control.markAsTouched({ onlySelf: true });
-    } else if (control instanceof FormGroup) {        
-      this.validateAllFormFields(control);           
-    }
-  });
-}
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
 
   ngOnDestroy(): void {
 

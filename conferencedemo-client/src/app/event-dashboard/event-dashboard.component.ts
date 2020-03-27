@@ -22,9 +22,7 @@ export class EventDashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.eventService.getEvents().subscribe(data => {
         this.conferenceEvents = data;
-        //this.imgEvent = this._sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64, " + data[0].eventPic);
     });
-
   }
 
   ngOnDestroy(): void {

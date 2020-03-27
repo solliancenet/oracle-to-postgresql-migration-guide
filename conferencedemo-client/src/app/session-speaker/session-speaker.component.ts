@@ -17,7 +17,6 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   conferenceSessionsSpeakers: SessionSpeaker[] = [];
   attendeeId: number = +sessionStorage.getItem('loggedInAttendeeId');
 
-
   event: Event;
   eventId: number;
   registration: Registration;
@@ -54,26 +53,20 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
     this.registration = new Registration();
     this.registration.attendeeId = this.attendeeId;
     this.registration.sessionId = sessionId;
-    this.currentDate=new Date();
-    
-    this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
+    this.currentDate = new Date();
 
+    this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
       this.registrationReponse = data;
-     
       if (data != null) {
         this.isSuccess = true;
-        let sessionSpeaker = this.conferenceSessionsSpeakers.filter(a=> a.sessionId==this.registration.sessionId)[0];
-        sessionSpeaker.isRegistered=true;
-
+        const sessionSpeaker = this.conferenceSessionsSpeakers.filter(a => a.sessionId == this.registration.sessionId)[0];
+        sessionSpeaker.isRegistered = true;
       }
       else {
         this.isSuccess = false;
       }
-      
     });
-
   }
-
 
   ngOnDestroy(): void {
 

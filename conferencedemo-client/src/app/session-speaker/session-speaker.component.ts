@@ -29,10 +29,9 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.route.params.subscribe(params => {
-      this.eventId = +params['eventId'];
-    });
-
+    this.route.params.subscribe((params: {eventId: string}) =>{
+      this.eventId = +params.eventId;
+    })
 
     this.sessionSpeakerService.getSessionSpeaker(this.eventId).subscribe(data => {
       this.conferenceSessionsSpeakers = data;
@@ -59,7 +58,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
       this.registrationReponse = data;
       if (data != null) {
         this.isSuccess = true;
-        const sessionSpeaker = this.conferenceSessionsSpeakers.filter(a => a.sessionId == this.registration.sessionId)[0];
+        const sessionSpeaker = this.conferenceSessionsSpeakers.filter(a => a.sessionId === this.registration.sessionId)[0];
         sessionSpeaker.isRegistered = true;
       }
       else {

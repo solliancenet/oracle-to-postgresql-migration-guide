@@ -9,26 +9,20 @@ import { Speaker } from '../models/speaker';
   templateUrl: './speaker.component.html',
   styleUrls: ['./speaker.component.sass']
 })
-
-
 export class SpeakerComponent implements OnInit, OnDestroy {
-
-  dtSpeaker: Speaker;
-  speakerId: any;
+  speaker: Speaker;
+  speakerId: number;
   imgSpeaker: SafeResourceUrl;
 
   constructor(private route: ActivatedRoute, private speakerService: SpeakerService, private _sanitizer: DomSanitizer) { }
+    ngOnInit(): void {
+    this.route.params.subscribe((params: {speakerId: string}) =>{
+      this.speakerId = +params.speakerId;
+    })
 
-  ngOnInit(): void {
-    // Getting Speakerid from URL
-    this.route.params.subscribe(params => {
-      this.speakerId = +params['speakerId'];
-    });
-
-    // Get Speaker Detail on SpeakerID
     this.speakerService.getSpeaker(this.speakerId).subscribe(data => {
-      this.dtSpeaker = data;
-      this.imgSpeaker = this._sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64, " + data.speakerPic);
+      this.speaker = data;
+      this.imgSpeaker = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64, ' + data.speakerPic);
     });
   }
 

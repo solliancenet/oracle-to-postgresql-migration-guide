@@ -25,65 +25,50 @@ import { ngModuleJitUrl } from '@angular/compiler';
 
 export class RegisterAttendeesComponent implements OnInit, OnDestroy {
 
-  dtAttendee: Attendee[] = [];
+  attendees: Attendee[] = [];
   dtRegistration: Registration[] = [];
-  reg: Registration;
-
-  sessionId: any;
-
-
-  //form group
+  registration: Registration;
+  sessionId: number;
   myform: FormGroup;
   firstName: FormControl;
   lastName: FormControl;
   email: FormControl;
-  // form group ends
-
 
   constructor(private route: ActivatedRoute, private registerAttendeesService: RegisterAttendeesService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.sessionId = +params['sessionId'];
-    });
-
+    this.route.params.subscribe((params: {sessionId: string}) =>{
+      this.sessionId = +params.sessionId;
+    })
     this.createFormControls();
     this.createForm();
   }
-
-  // Submitting Registeration Data
   submitRegister() {
     this.validateAllFormFields(this.myform);
     if (this.myform.valid) {
-      /// Posting to Attendee.
       this.registerAttendeesService.postAttendee(this.myform.value).subscribe(data => {
-        this.dtAttendee = data;
+        this.attendees = data;
       });
-
-      // Posting to Registration
-      if (this.dtAttendee != null) {
+      if (this.attendees != null) {
         this.registerAttendeesService.postRegistration(null);
       }
     }
     else {
-      this.validateAllFormFields(this.myform); ///
+      this.validateAllFormFields(this.myform);
     }
   }
 
-
-  /// Form Contrlos Validation
   createFormControls() {
     this.myform = new FormGroup({
       firstName: new FormControl('', [Validators.requiredTrue]),
       lastName: new FormControl('', [Validators.requiredTrue]),
       email: new FormControl('', [
         Validators.requiredTrue,
-        Validators.pattern("[^ @]*@[^ @]*")
+        Validators.pattern('[^ @]*@[^ @]*')
       ])
     });
   }
 
-  // Form
   createForm() {
     this.myform = new FormGroup({
       firstName: this.firstName,
@@ -91,8 +76,6 @@ export class RegisterAttendeesComponent implements OnInit, OnDestroy {
       email: this.email
     });
   }
-
-  ///
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);

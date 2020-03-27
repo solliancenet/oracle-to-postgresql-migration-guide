@@ -1,37 +1,12 @@
 <div class="container col-md-6" style="text-align: center;">
   <div class="row col-md-12">
     <div >
-      <h1>Speaker: <strong><span class="ng-binding">{{dtSpeaker.firstName}} {{dtSpeaker.lastName}}</span></strong> </h1>
+      <h1>Speaker: <strong><span class="ng-binding">{{speaker.firstName}} {{speaker.lastName}}</span></strong> </h1>
       <p class="margin-top speaker-info-text" style="text-align: justify;">
         <img class="img-responsive center-block" [src]="imgSpeaker" onError="this.src='/assets/images/no-speaker.jpg';" />
 
-        <span class="ng-binding">{{dtSpeaker.speakerBio}}</span>
+        <span class="ng-binding">{{speaker.speakerBio}}</span>
       </p>
     </div>
   </div>
 </div>
-
-
-<style>
-  .speaker-info-text img {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 200px;
-    height: 200px;
-}
-.center-block {
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-}
-img {
-    vertical-align: middle;
-    border-style: none;
-}
-/* @media (min-width: 768px) */
-.col-md-6 {
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-</style>

@@ -1,70 +1,49 @@
 <div style="height: 30px;"></div>
 <div class="container">
-    <form novalidate 
-        [formGroup]="myform" (ngSubmit)="submitRegister()">
-  
-    <!-- <fieldset formGroupName="name"> -->
-      <div class="form-group"
-           [ngClass]="{
+  <form novalidate [formGroup]="myform" (ngSubmit)="submitRegister()">
+
+    <div class="form-group" [ngClass]="{
           'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
           'has-success': firstName.valid && (firstName.dirty || firstName.touched)
         }">
-        <label>First Name</label>
-        <input type="text"
-               class="form-control"
-               formControlName="firstName"
-               required>
-        <div class="form-control-feedback"
-             *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
-          <p *ngIf="firstName.errors.required">First Name is required</p>
-        </div>
+      <label>First Name</label>
+      <input type="text" class="form-control" formControlName="firstName" required>
+      <div class="form-control-feedback" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+        <p *ngIf="firstName.errors.required">First Name is required</p>
       </div>
-  
-      <div class="form-group"
-           [ngClass]="{
+    </div>
+
+    <div class="form-group" [ngClass]="{
           'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
           'has-success': lastName.valid && (lastName.dirty || lastName.touched)
         }">
-        <label>Last Name</label>
-        <input type="text"
-               class="form-control"
-               formControlName="lastName"
-               required>
-        <div class="form-control-feedback"
-             *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
-          <p *ngIf="lastName.errors.required">Last Name is required</p>
-        </div>
+      <label>Last Name</label>
+      <input type="text" class="form-control" formControlName="lastName" required>
+      <div class="form-control-feedback" *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+        <p *ngIf="lastName.errors.required">Last Name is required</p>
       </div>
-    <!-- </fieldset> -->
-  
-  
-    <div class="form-group"
-         [ngClass]="{
+    </div>
+
+    <div class="form-group" [ngClass]="{
           'has-danger': email.invalid && (email.dirty || email.touched),
           'has-success': email.valid && (email.dirty || email.touched)
      }">
       <label>Email</label>
-      <input type="email"
-             class="form-control"
-             formControlName="email"
-             required>
-      <div class="form-control-feedback"
-           *ngIf="email.errors && (email.dirty || email.touched)">
+      <input type="email" class="form-control" formControlName="email" required>
+      <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
         <p *ngIf="email.errors.required">Email is required</p>
         <p *ngIf="password.errors.pattern">The email address must contain at least the @ character</p>
       </div>
-  
-    </div>  
 
-    <div class="form-group"
-         [ngClass]="{
+    </div>
+
+    <div class="form-group" [ngClass]="{
           'has-danger': email.invalid && (email.dirty || email.touched),
           'has-success': email.valid && (email.dirty || email.touched)
-     }">     
-      <input type="submit" name="submit" value="Register"
-             class="submit">
-    </div>  
-  
+     }">
+      <input type="submit" name="submit" value="Register" class="submit">
+    </div>
+
     <pre>{{myform.value | json}}</pre>
   </form>
-  </div>
+</div>

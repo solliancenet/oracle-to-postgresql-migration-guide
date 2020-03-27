@@ -17,7 +17,6 @@ const routes: Routes = [
   { path: 'sessionspeaker/:eventId', component: SessionSpeakerComponent },
   { path: 'attendees', component: RegisteredAttendeesDashboardComponent },
   { path: 'speaker/:speakerId', component: SpeakerComponent },
-  // { path: 'sessionspeaker/:sessionId', component: SessionSpeakerComponent },  
   { path: '', component: EventDashboardComponent }
 ];
 

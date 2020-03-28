@@ -1,6 +1,19 @@
 --------------------------------------------------------
---  File created - Monday-March-23-2020   
+--  File created - Thursday-March-26-2020   
 --------------------------------------------------------
+DROP SEQUENCE "REG_APP"."DBOBJECTID_SEQUENCE";
+DROP SEQUENCE "REG_APP"."REGISTRATION_ID_SEQ";
+DROP TABLE "REG_APP"."ATTENDEES";
+DROP TABLE "REG_APP"."EVENTS";
+DROP TABLE "REG_APP"."REGISTRATIONS";
+DROP TABLE "REG_APP"."SESSIONS";
+DROP TABLE "REG_APP"."SPEAKERS";
+DROP VIEW "REG_APP"."V_ATTENDEE_SESSIONS";
+DROP VIEW "REG_APP"."V_SPK_SESSION";
+DROP PROCEDURE "REG_APP"."GET_RANDOM_ATTENDEE";
+DROP PROCEDURE "REG_APP"."REGISTER_ATTENDEE_SESSION";
+DROP PACKAGE "REG_APP"."UTILITY_SCRIPTS";
+DROP PACKAGE BODY "REG_APP"."UTILITY_SCRIPTS";
 --------------------------------------------------------
 --  DDL for Sequence DBOBJECTID_SEQUENCE
 --------------------------------------------------------
@@ -10,7 +23,7 @@
 --  DDL for Sequence REGISTRATION_ID_SEQ
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "REG_APP"."REGISTRATION_ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 43 CACHE 20 NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "REG_APP"."REGISTRATION_ID_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 103 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Table ATTENDEES
 --------------------------------------------------------
@@ -256,6 +269,14 @@ Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) 
 Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (24,to_date('16-MAR-20','DD-MON-RR'),2,52);
 Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (26,to_date('16-MAR-20','DD-MON-RR'),2,41);
 Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (27,to_date('16-MAR-20','DD-MON-RR'),1,25);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (43,to_date('24-MAR-20','DD-MON-RR'),2,114);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (63,to_date('24-MAR-20','DD-MON-RR'),2,148);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (83,to_date('25-MAR-20','DD-MON-RR'),2,56);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (85,to_date('25-MAR-20','DD-MON-RR'),1,56);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (86,to_date('25-MAR-20','DD-MON-RR'),2,136);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (87,to_date('26-MAR-20','DD-MON-RR'),1,5);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (89,to_date('26-MAR-20','DD-MON-RR'),2,5);
+Insert into REG_APP.REGISTRATIONS (ID,REGISTRATION_DATE,SESSION_ID,ATTENDEE_ID) values (92,to_date('26-MAR-20','DD-MON-RR'),1,95);
 REM INSERTING into REG_APP.SESSIONS
 SET DEFINE OFF;
 Insert into REG_APP.SESSIONS (ID,NAME,DESCRIPTION,SESSION_DATE,SPEAKER_ID,EVENT_ID,DURATION) values (1,'Serverless Signal R','Build real time messaging applications for web and .NET',to_date('21-SEP-20','DD-MON-RR'),1,1,60);
@@ -423,7 +444,7 @@ END UTILITY_SCRIPTS;
                 FETCH c_tables INTO r_table;
                 EXIT WHEN c_tables%notfound;
                 -- DBMS_OUTPUT.PUT_LINE( 'if not exist "schema/tables/' || r_table.table_name || '" mkdir "schema/tables/"' || r_table.table_name || '"');
-                DBMS_OUTPUT.PUT_LINE( 'ora2pg -p -t TABLE -a ' || r_table.table_name || ' -o ' || r_table.table_name || '.sql --namespace REG_APP -c config/ora2pg_dist-my-migration-test.conf' );
+                DBMS_OUTPUT.PUT_LINE( 'ora2pg -t TABLE -a ' || r_table.table_name || ' -o ' || r_table.table_name || '.sql --namespace REG_APP -c config/ora2pg_dist-my-migration-test.conf -b schema/tables/' );
             END LOOP;
             CLOSE c_tables;
     

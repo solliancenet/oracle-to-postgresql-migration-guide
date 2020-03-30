@@ -4,13 +4,12 @@ import { SessionSpeakerService } from '../services/sessionspeaker.service';
 import { SessionSpeaker } from '../models/session-speaker';
 import { EventService } from '../services/event.service';
 import { Event } from '../models/Event';
-import { RegisterAttendeesService } from '../services/register-attendees.service';
+import { RegisterationService } from '../services/registeration.service';
 import { Registration } from '../models/registration';
 
 @Component({
   selector: 'app-session-speaker',
-  templateUrl: './session-speaker.component.html',
-  styleUrls: ['./session-speaker.component.sass']
+  templateUrl: './session-speaker.component.html'
 })
 export class SessionSpeakerComponent implements OnInit, OnDestroy {
 
@@ -21,15 +20,30 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   eventId: number;
   registration: Registration;
   registrationReponse: Registration[] = [];
-  isSuccess: boolean;
-  currentDate: any;
+  currentDate: Date;
 
   constructor(private route: ActivatedRoute, private sessionSpeakerService: SessionSpeakerService, private eventService: EventService,
-    private registerAttendeesService: RegisterAttendeesService) { }
+    private registerAttendeesService: RegisterationService) { }
+
+  // Post Registration Method (Called on Button Click)
+  postRegistration(sessionId: number) {
+    this.registration = new Registration();
+    this.registration.attendeeId = this.attendeeId;
+    this.registration.sessionId = sessionId;
+    this.currentDate = new Date();
+
+    this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
+      this.registrationReponse = data;
+      if (data != null) {
+        const sessionSpeaker = this.conferenceSessionsSpeakers.filter(a => a.sessionId === this.registration.sessionId)[0];
+        sessionSpeaker.isRegistered = true;
+      }
+    });
+  }
 
   ngOnInit(): void {
 
-    this.route.params.subscribe((params: {eventId: string}) =>{
+    this.route.params.subscribe((params: { eventId: string }) => {
       this.eventId = +params.eventId;
     })
 
@@ -47,28 +61,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Post Registration Method (Called on Button Click)
-  postRegistration(sessionId: number) {
-    this.registration = new Registration();
-    this.registration.attendeeId = this.attendeeId;
-    this.registration.sessionId = sessionId;
-    this.currentDate = new Date();
-
-    this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
-      this.registrationReponse = data;
-      if (data != null) {
-        this.isSuccess = true;
-        const sessionSpeaker = this.conferenceSessionsSpeakers.filter(a => a.sessionId === this.registration.sessionId)[0];
-        sessionSpeaker.isRegistered = true;
-      }
-      else {
-        this.isSuccess = false;
-      }
-    });
-  }
-
   ngOnDestroy(): void {
-
   }
 
 }

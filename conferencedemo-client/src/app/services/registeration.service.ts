@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Session } from '../models/session';
+import { Registration } from '../models/registration';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SessionService {
+
+export class RegisterationService {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getSessions(): Observable<Session[]> {
+  // Posting Session Registration Details
+  postRegistration(registration: Registration): Observable<Registration[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -22,8 +24,7 @@ export class SessionService {
       })
     };
 
-
-    return this.http.get<Session[]>(`${environment.webApiUrl}/sessions`, httpOptions)
+    return this.http.post<Registration[]>(`${environment.webApiUrl}/registrations/`, registration, httpOptions)
       .pipe(
         map(data => {
           return data
@@ -37,7 +38,6 @@ export class SessionService {
         })
       );
   }
-
 
 
   private handleError(error: HttpErrorResponse) {

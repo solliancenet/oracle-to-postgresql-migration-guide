@@ -36,7 +36,29 @@ export class AttendeeService {
       );
   }
 
+  // Get all Attendees
+  getAttendees(): Observable<Attendee[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Access-Control-Allow-Origin': 'GET'
+      })
+    };
 
+    return this.http.get<Attendee[]>(`${environment.webApiUrl}/attendees`, httpOptions)
+      .pipe(
+        map(data => {
+          return data
+        }),
+        catchError(data => {
+          if (data instanceof HttpErrorResponse && data.status === 404) {
+              return [];
+            } else {
+              this.handleError(data);
+            }
+        })
+      );
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

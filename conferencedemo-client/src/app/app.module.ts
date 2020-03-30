@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ControlContainer, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -11,11 +11,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SessionsComponent } from './sessions/sessions.component';
 import { SpeakerComponent } from './speaker/speaker.component';
 import { SessionSpeakerComponent } from './session-speaker/session-speaker.component'
 import { RegisteredAttendeesDashboardComponent } from './registered-attendees-dashboard/registered-attendees-dashboard.component';
-import { RegisterAttendeesComponent } from './register-attendees/Register-Attendees.component';
 
 
 @NgModule({
@@ -23,11 +21,9 @@ import { RegisterAttendeesComponent } from './register-attendees/Register-Attend
     AppComponent,
     LoginComponent,
     EventDashboardComponent,
-    SessionsComponent,
     SpeakerComponent,
     SessionSpeakerComponent,
-    RegisteredAttendeesDashboardComponent,
-    RegisterAttendeesComponent
+    RegisteredAttendeesDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +34,7 @@ import { RegisterAttendeesComponent } from './register-attendees/Register-Attend
     MatCardModule,
     MatInputModule,
     MatListModule,
-    MatToolbarModule,
-    ReactiveFormsModule
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

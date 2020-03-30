@@ -6,17 +6,17 @@ import { Speaker } from '../models/speaker';
 
 @Component({
   selector: 'app-speaker',
-  templateUrl: './speaker.component.html',
-  styleUrls: ['./speaker.component.sass']
+  templateUrl: './speaker.component.html'
 })
+
 export class SpeakerComponent implements OnInit, OnDestroy {
   speaker: Speaker;
   speakerId: number;
   imgSpeaker: SafeResourceUrl;
 
   constructor(private route: ActivatedRoute, private speakerService: SpeakerService, private _sanitizer: DomSanitizer) { }
-    ngOnInit(): void {
-    this.route.params.subscribe((params: {speakerId: string}) =>{
+  ngOnInit(): void {
+    this.route.params.subscribe((params: { speakerId: string }) => {
       this.speakerId = +params.speakerId;
     })
 
@@ -26,6 +26,6 @@ export class SpeakerComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void { }
-
+  ngOnDestroy(): void {
+  }
 }

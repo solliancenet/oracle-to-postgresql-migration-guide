@@ -6,6 +6,8 @@ import { EventService } from '../services/event.service';
 import { Event } from '../models/Event';
 import { RegisterationService } from '../services/registeration.service';
 import { Registration } from '../models/registration';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-session-speaker',
@@ -21,6 +23,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   registration: Registration;
   registrationReponse: Registration[] = [];
   currentDate: Date;
+  private _destroyed$ = new Subject();
 
   constructor(private route: ActivatedRoute, private sessionSpeakerService: SessionSpeakerService, private eventService: EventService,
     private registerAttendeesService: RegisterationService) { }
@@ -34,6 +37,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
 
     this.registerAttendeesService.postRegistration(this.registration).subscribe(data => {
       this.registrationReponse = data;
+      takeUntil(this._destroyed$);
       if (data != null) {
         const sessionSpeaker = this.conferenceSessionsSpeakers.filter(a => a.sessionId === this.registration.sessionId)[0];
         sessionSpeaker.isRegistered = true;
@@ -49,9 +53,11 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
 
     this.sessionSpeakerService.getSessionSpeaker(this.eventId).subscribe(data => {
       this.conferenceSessionsSpeakers = data;
+      takeUntil(this._destroyed$);
     });
 
     this.eventService.getEvents().subscribe(data => {
+      takeUntil(this._destroyed$);
       if (data.length > 0) {
         this.event = data.filter(a => a.id === this.eventId)[0];
       }
@@ -62,6 +68,8 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this._destroyed$.next(true);
+    this._destroyed$.complete();
   }
 
 }

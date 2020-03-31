@@ -3,6 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { SpeakerService } from '../services/speaker.service';
 import { Speaker } from '../models/speaker';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-speaker',
@@ -13,6 +15,7 @@ export class SpeakerComponent implements OnInit, OnDestroy {
   speaker: Speaker;
   speakerId: number;
   imgSpeaker: SafeResourceUrl;
+  private _destroyed$ = new Subject();
 
   constructor(private route: ActivatedRoute, private speakerService: SpeakerService, private _sanitizer: DomSanitizer) { }
   ngOnInit(): void {
@@ -22,10 +25,13 @@ export class SpeakerComponent implements OnInit, OnDestroy {
 
     this.speakerService.getSpeaker(this.speakerId).subscribe(data => {
       this.speaker = data;
+      takeUntil(this._destroyed$);
       this.imgSpeaker = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64, ' + data.speakerPic);
     });
   }
 
   ngOnDestroy(): void {
+    this._destroyed$.next(true);
+    this._destroyed$.complete();
   }
 }

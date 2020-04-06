@@ -5,9 +5,8 @@ import java.util.Date;
 
 
 @Entity
-// Name of the database table.
-// @Table(name = "EVENTS2", schema = "public") is the same.  Don't create your table or your field names in upper case.
-@Table(name = "events2", schema = "public")
+// Name of the database table.  Don't create your table or your field names in upper case.
+@Table(name = "events", schema = "reg_app")
 public class Event {
     public Event() {}
 

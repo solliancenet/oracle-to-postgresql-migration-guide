@@ -1,1 +1,1 @@
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Fsolliancenet%2Foracle-to-postgresql-migration-guide%2Ftree%2Fmaster%2Farm-template%2Fweb-template%2Ftemplate.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/solliancenet/oracle-to-postgresql-migration-guide/master/arm-template/web-template/template.json)

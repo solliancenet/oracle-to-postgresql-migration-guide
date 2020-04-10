@@ -432,7 +432,7 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/',uniqueString(resourceGroup().id))]",
+      "name": "[concat(parameters('name'), '/24b4d6a2b8bd972694d261c92dd3ad72edaf6c08')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
@@ -451,7 +451,7 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/',uniqueString(resourceGroup().id))]",
+      "name": "[concat(parameters('name'), '/9bbc5f252d05925769cc203c06330ed190cd8ad7')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
@@ -470,7 +470,7 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/',uniqueString(resourceGroup().id))]",
+      "name": "[concat(parameters('name'), '/9c30ad99cbfe8d235c092919d3c566a97ab98c65')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
@@ -489,7 +489,7 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/',uniqueString(resourceGroup().id))]",
+      "name": "[concat(parameters('name'), '/da9c43254b47417989619aea163fd41e')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"

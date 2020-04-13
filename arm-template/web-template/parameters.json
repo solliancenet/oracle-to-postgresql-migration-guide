@@ -3,16 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "name": {
-      "value": "conferencedemo-90-web"
-    },
-    "location": {
-      "value": "East US"
-    },
-    "hostingPlanName": {
-      "value": "MyTestPlan01"
-    },
-    "serverFarmResourceGroup": {
-      "value": "Sol-Oracle-Test"
+      "value": "conferencedemo-90-site"
     },
     "alwaysOn": {
       "value": false
@@ -20,17 +11,11 @@
     "sku": {
       "value": "Basic"
     },
-    "skuCode": {
-      "value": "B1"
-    },
     "workerSize": {
-      "value": "0"
-    },
-    "workerSizeId": {
-      "value": "0"
+      "value": "1"
     },
     "numberOfWorkers": {
-      "value": 1
+      "value": 2
     },
     "linuxFxVersion": {
       "value": "JAVA|11-java11"
@@ -40,9 +25,6 @@
     },
     "administratorLogin": {
       "value": "mypgadmin"
-    },
-    "administratorLoginPassword": {
-      "value": null
     },
     "databaseSkuCapacity": {
       "value": 4
@@ -63,7 +45,7 @@
       "value": "Gen5"
     },
     "backupRetentionDays": {
-      "value": 7
+      "value": 8
     },
     "databaseGeoRedundantBackup": {
       "value": "Disabled"

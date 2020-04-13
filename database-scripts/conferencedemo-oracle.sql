@@ -283,8 +283,10 @@ Insert into REG_APP.SESSIONS (ID,NAME,DESCRIPTION,SESSION_DATE,SPEAKER_ID,EVENT_
 Insert into REG_APP.SESSIONS (ID,NAME,DESCRIPTION,SESSION_DATE,SPEAKER_ID,EVENT_ID,DURATION) values (2,'Hybrid updates in Azure with Julia White','Hybrid updates in Azure with Julia White',to_date('29-MAR-19','DD-MON-RR'),2,1,45);
 REM INSERTING into REG_APP.SPEAKERS
 SET DEFINE OFF;
-Insert into REG_APP.SPEAKERS (ID,FIRST_NAME,LAST_NAME) values (1,'Anthony','Smith');
-Insert into REG_APP.SPEAKERS (ID,FIRST_NAME,LAST_NAME) values (2,'Julia','Whitehall');
+Insert into REG_APP.SPEAKERS (ID,FIRST_NAME,LAST_NAME,SPEAKER_BIO) values (1,'Anthony','Smith','When Anthony is not evaligizing Azure technologies, he is watching baseball and cheering for his favorite team. Go Mets!');
+Insert into REG_APP.SPEAKERS (ID,FIRST_NAME,LAST_NAME,SPEAKER_BIO) values (2,'Julia','Whitehall',TO_CLOB(q'[Julia leads the marketing team for Microsoft Azure, and is focused on how Microsoft presents its Applications, Infrastructure, Data and Intelligence capabilities to customers and partners. In addition to the primary focus on Azure, the team are also responsible for Microsoftâ€™s hybrid cloud assets; including SQL Server, Windows Server, Developer tools and management capabilities. Across this portfolio, Julia is responsible for the value proposition, global go to market strategy, and industry enga]')
+|| TO_CLOB(q'[gement. She also works in partnership with engineering leadership to chart the product roadmaps. Julia joined Microsoft in 2001 as a product manager in the Enterprise Server team. In 2005, she moved to Microsoftâ€™s US sales organization to run channel marketing and sales incentives. In 2007, she returned to product leadership, taking on Exchange Server product marketing. Over the course of the next 8 years, she was instrumental in leading the productâ€™s evolution from an on-premises server technol]')
+|| TO_CLOB(q'[ogy to establishing Office 365 as the leader in cloud productivity services. Julia has a bachelorâ€™s degree from Stanford University and a masterâ€™s in business administration from Harvard Business School.]'));
 --------------------------------------------------------
 --  DDL for Index SESSIONS_PK
 --------------------------------------------------------

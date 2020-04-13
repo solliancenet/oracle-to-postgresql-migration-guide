@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 })
 
 export class SpeakerComponent implements OnInit, OnDestroy {
-  speaker: Speaker;
+  speaker: Speaker = {firstName: '', lastName: ''} as any;
   speakerId: number;
   imgSpeaker: SafeResourceUrl;
   private _destroyed$ = new Subject();

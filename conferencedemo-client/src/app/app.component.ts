@@ -10,7 +10,7 @@ import { AttendeeService } from './services/attendee.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'conference-client';
-  attendee: Attendee;
+  attendee: Attendee = {firstName: '', lastName: ''} as any;
   private subscription: Subscription;
 
   constructor(private attendeeService: AttendeeService) {

@@ -1,19 +1,17 @@
 package com.yourcompany.conferencedemo.models;
 
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "speakers", schema = "reg_app")
-public class Speaker {
+@Table(name = "attendees", schema = "reg_app")
+public class Attendee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
-    private String speakerBio;
-    private byte[] speakerPic;
+    private String emailAddress;
 
     public Long getId() {
         return id;
@@ -39,20 +37,11 @@ public class Speaker {
         this.lastName = lastName;
     }
 
-
-    public String getSpeakerBio() {
-        return speakerBio;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setSpeakerBio(String speakerBio) {
-        this.speakerBio = speakerBio;
-    }
-
-    public byte[] getSpeakerPic() {
-        return speakerPic;
-    }
-
-    public void setSpeakerPic(byte[] speakerPic) {
-        this.speakerPic = speakerPic;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

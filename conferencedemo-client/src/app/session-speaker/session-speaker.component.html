@@ -2,8 +2,8 @@
     <div class="section-white">
         <div>
             <h1>Sessions</h1>
-            <p><strong> Listed below are Sessions for Event: {{event.eventName}} </strong></p>
-            <p>{{event.eventDescription}}</p>
+            <p><strong> Listed below are Sessions for Event: {{event.eventName || ''}} </strong></p>
+            <p>{{event.eventDescription || ''}}</p>
 
         </div>
         <div class="row" *ngFor="let conferenceSessionsSpeaker of conferenceSessionsSpeakers" style="padding: 5px;">
@@ -14,7 +14,7 @@
                         <h1><span
                                 style="color:#19647E; text-transform: uppercase;">{{conferenceSessionsSpeaker.sessionName}}</span>
                         </h1>
-                        <p><span style="color:#19647E; text-transform: uppercase; cursor: pointer;" 
+                        <p><span style="color:#19647E; text-transform: uppercase; cursor: pointer;"
                             [routerLink]="['/speaker', conferenceSessionsSpeaker.speakerId]">
                                 {{conferenceSessionsSpeaker.firstName}} {{conferenceSessionsSpeaker.lastName}} </span>
                         </p>
@@ -28,7 +28,7 @@
                         <span style="float: right;">
                             <span *ngIf="conferenceSessionsSpeaker.isRegistered">
                                 Registered: {{currentDate | date :'d MMM, yyyy h:mm a'}} </span>
-                                
+
                             <span *ngIf="!conferenceSessionsSpeaker.isRegistered">
                                 <button type="submit" (click)="postRegistration(conferenceSessionsSpeaker.sessionId)"
                                     style="margin-bottom: 10px;" class="btn btn-primary">Register Here..</button></span>

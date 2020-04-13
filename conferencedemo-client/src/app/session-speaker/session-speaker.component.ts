@@ -18,7 +18,7 @@ export class SessionSpeakerComponent implements OnInit, OnDestroy {
   conferenceSessionsSpeakers: SessionSpeaker[] = [];
   attendeeId: number = +sessionStorage.getItem('loggedInAttendeeId');
 
-  event: Event;
+  event: Event = {} as any;
   eventId: number;
   registration: Registration;
   registrationReponse: Registration[] = [];

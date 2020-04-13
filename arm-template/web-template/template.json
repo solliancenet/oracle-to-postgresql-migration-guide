@@ -134,9 +134,9 @@
         "9.5",
         "9.6",
         "10",
-        "11.5"
+        "11"
       ],
-      "defaultValue": "10",
+      "defaultValue": "11",
       "metadata": {
         "description": "PostgreSQL version"
       }

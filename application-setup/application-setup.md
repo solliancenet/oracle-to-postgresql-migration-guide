@@ -2,7 +2,7 @@
 
 # Setting up the Oracle to PostgreSQL Migration Guide Sample Application
 - [Setting up the Oracle to PostgreSQL Migration Guide Sample Application](#setting-up-the-oracle-to-postgresql-migration-guide-sample-application)
-  - [Application Architecture](#application-architecture)
+  - [Sample Application Architecture](#sample-application-architecture)
   - [Oracle Database ER Diagram](#oracle-database-er-diagram)
   - [Git repo structure](#git-repo-structure)
   - [Installing the Oracle database](#installing-the-oracle-database)
@@ -24,7 +24,7 @@
   - [Update your Angular application](#update-your-angular-application)
 
 
-## Application Architecture
+## Sample Application Architecture
 ![A diagram describing the architecture.](media/2020-03-26-15-09-15.png)
 
 This sample application utilizes the following frameworks and components. The reader is responsible for installing the dependencies.
@@ -41,6 +41,9 @@ This sample application utilizes the following frameworks and components. The re
 10. Angular CLI
 
 ## Oracle Database ER Diagram
+
+This diagram provides an overview of the database table structure.
+
 ![](media/2020-03-26-15-10-27.png)
 
 ## Git repo structure
@@ -50,7 +53,7 @@ Navigate to the Git repo. You should see this structure.
 ![](media/2020-04-12-05-52-24.png)
 ## Installing the Oracle database
 
-In order to run the sample application, you need to have access to some instance of Oracle.  This application has been tested with 11g. The structure is basic enough to work on most versions.  To create your own Oracle instance locally, you can download a copy of Oracle Express Edition.  Also, I would recommend installing the SQLDeveloper client tool as well.  You can use any Oracle compatible client tool of choice.  Once you have access to the database instance, follow these steps.
+In order to run the sample application, you need to have access to some instance of Oracle.  This application has been tested with 11g. The structure is basic enough to work on most versions.  To create your own Oracle instance locally, you can download a copy of Oracle Express Edition.  Also, it is recommended to install the SQLDeveloper client tool as well.  You can use any Oracle compatible client tool of choice.  Once you have access to the database instance, follow these steps.
 
 Create the **REG_APP** user.
 
@@ -68,9 +71,9 @@ Also, there is a SQL Loader option available as well. It contains the sample blo
 
 ### Add the sample blobs
 
->Note: You can skip this section if you used the SQL Loader option.
+>Note: You can skip this section if you used the Oracle SQL Loader option.
 
-The basic database schema should be created now with sample data. To update the sample speaker picture blob records, open SQL Developer.  Select the Speaker table and the **Data** tab.  The records should be displayed. The SPEAKER_PIC and SPEAKER_BIO fields will be NULL. Select the pencil icon. 
+The basic database schema should be created now with sample data. To update the sample speaker picture blob records, open SQL Developer.  Select the Speaker table and the **Data** tab.  The records should be displayed. The SPEAKER_PIC and SPEAKER_BIO fields will be NULL. Select the pencil icon in the record field.
 
 ![](media/2020-04-12-05-48-42.png)
 
@@ -96,13 +99,18 @@ The blob fields will updated with the sample image.  Commit your changes.
 
 ![](media/2020-03-26-15-19-58.png)
 
+- DB_CONNECTION_URL - Connection to local Oracle database.
+- DB_USER_NAME - Oracle database user name.
+- DB_PASSWORD - Oracle database password.
+- ALLOWED_ORIGINS - e.g. http://localhost:4200
+
 >Note:  Your configuration values will be different.  The database user name should be the same.  Use strong passwords.
 
-An alternative, would be to update your application.properties file.  Hardcoding the environment secrets is not recommended.  Injecting them at runtime is a more secure method.
+An alternative, would be to update your application.properties file.  Hardcoding the environment secrets in the application configuration file is not recommended as they will be saved into SCM.  Injecting the secrets at runtime via tokens is a more secure method.
 
 ![](media/2020-03-26-15-23-50.png)
 
-Open your command line or terminal.  Run Maven commands.
+Open your command line or terminal.  Run this Maven command to test your set up and configuration.
 
 ``` cmd
     mvn clean package
@@ -122,9 +130,9 @@ In your browser, navigate to:  http://localhost:8888/api/v1/events.
 
 ## Installing and running the Angular application locally
 
-This project requires npm and NodeJS to be installed.
+This project requires NPM and NodeJS to be installed.
 
-Install the Angular project dependencies
+Install the Angular project dependencies.
 
 ``` cmd
     npm install
@@ -136,13 +144,13 @@ Build and run the application.
     ng serve -o
 ```
 
-You should see a web landing page similar to this:
+A web landing page similar to this should be visible:
 
 ![](media/2020-03-26-15-41-42.png)
 
 ### Summary
 
-At this point, you have simulated the legacy application running on-premises. Now, the Azure target environment will need to be created.
+At this point, you have simulated the legacy application running on-premises. You are ready to start the migration process. Now, the Azure target environment will need to be created.
 
 ## Create and configure your Azure resources
 
@@ -156,7 +164,7 @@ Navigate to the arm-template in the Git repo.  Select the **Deploy to Azure** bu
 
 Fill out the parameters and select the **Purchase** button. Capture the database **Server name** and **Admin username** for later use.  You should create a ***strong*** password.  Using well known development passwords exposes your environment to brute force attacks and adds attack vectors.
 
->Note:  This lab was tested using PostgreSQL 11.  You could deploy a different version, but the challenges might be different.
+>Note:  This lab was tested using PostgreSQL 11.  Deploying a different version will bring different challenges.
 
 ### Capture the PostgreSQL configuration
 
@@ -172,11 +180,14 @@ Set up your Firewall rules.  If you have a migration server VM that gets shut do
 
 ## Set up your migration server and migrate the Oracle database to PostgreSQL
 
+The basic tasks of migration have been listed below.  The task details have been discussed in the Oracle to PostgreSQL Migration Guide Word document.
+
 - Navigate to your migration server. It can be a VM or your local machine.
 - Install the ora2pg utility.
 - Make sure the Oracle server or client libraries are installed.
 - Install the pgAdmin utility.
-- Create the reg_app schema in pgAdmin.
+- Create a migration user login. Grant access.
+- Create the **reg_app** schema in pgAdmin. Grant access to the migration user.
 - Create a ora2pg project structure and migrate the database.
   - Configure a conf file to point to the Oracle and PG reg_app schema.
   - Export the Oracle table schema.

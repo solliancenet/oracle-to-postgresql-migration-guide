@@ -3,16 +3,14 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "name": {
-      "type": "string"
-    },
-    "hostingPlanName": {
       "type": "string",
       "metadata": {
-        "description": "Plan Name for Hosting"
+        "description": "Web Site Name"
       }
     },
     "alwaysOn": {
-      "type": "bool"
+      "type": "bool",
+      "defaultValue": "false"
     },
     "sku": {
       "type": "string",
@@ -40,14 +38,9 @@
         "description": "Workers Size"
       }
     },
-    "workerSizeId": {
-      "type": "string",
-      "metadata": {
-        "description": "Worker Size Id"
-      }
-    },
     "numberOfWorkers": {
       "type": "int",
+      "defaultValue": 1,
       "metadata": {
         "description": "Workers Number"
       }
@@ -79,7 +72,7 @@
     },
     "databaseSkuCapacity": {
       "type": "int",
-      "defaultValue": 2,
+      "defaultValue": 4,
       "allowedValues": [
         2,
         4,
@@ -93,7 +86,7 @@
     },
     "databaseSkuName": {
       "type": "string",
-      "defaultValue": "GP_Gen5_2",
+      "defaultValue": "GP_Gen5_4",
       "allowedValues": [
         "GP_Gen5_2",
         "GP_Gen5_4",
@@ -118,7 +111,7 @@
         102400,
         51200
       ],
-      "defaultValue": 51200,
+      "defaultValue": 102400,
       "metadata": {
         "description": "Azure database for PostgreSQL Sku Size "
       }
@@ -156,7 +149,13 @@
       }
     },
     "backupRetentionDays": {
-      "type": "int"
+      "type": "int",
+      "defaultValue": 7,
+      "minValue": 7,
+      "maxValue": 15,
+      "metadata": {
+        "description": "Backup Retention between 7 and 15 days"
+      }
     },
     "databaseGeoRedundantBackup": {
       "type": "string",
@@ -194,8 +193,9 @@
 
     "location": "[resourceGroup().location]",
     "serverfarmgroup": "[resourceGroup().name]",
+    "hostingPlanName": "[concat(parameters('name'), '-HostPlan')]",
     "subscriptionid": "[subscription().subscriptionId]",
-    "serverfarms_appsvc": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', variables('serverfarmgroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+    "serverfarms_appsvc": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', variables('serverfarmgroup'), '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
     "insightname": "[concat(parameters('name'), 'insight')]",
     "skuValues": "[parameters('sku')]",
     "skuGroup": {
@@ -250,16 +250,16 @@
     },
     {
       "apiVersion": "2018-11-01",
-      "name": "[parameters('hostingPlanName')]",
+      "name": "[variables('hostingPlanName')]",
       "type": "Microsoft.Web/serverfarms",
       "location": "[variables('location')]",
       "kind": "linux",
       "tags": {},
       "dependsOn": [],
       "properties": {
-        "name": "[parameters('hostingPlanName')]",
+        "name": "[variables('hostingPlanName')]",
         "workerSize": "[parameters('workerSize')]",
-        "workerSizeId": "[parameters('workerSizeId')]",
+        "workerSizeId": "[parameters('workerSize')]",
         "numberOfWorkers": "[parameters('numberOfWorkers')]",
         "reserved": true,
         "hostingEnvironment": ""
@@ -289,7 +289,7 @@
       "tags": {},
       "dependsOn": [
         "[concat('microsoft.insights/components/', variables('insightname'))]",
-        "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
       ],
       "properties": {
         "name": "[parameters('name')]",

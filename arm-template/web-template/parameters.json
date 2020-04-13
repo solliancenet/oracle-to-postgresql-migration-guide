@@ -1,78 +1,66 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "name": {
-      "value": "conferencedemo-90-web"
-    },
-    "location": {
-      "value": "East US"
-    },
-    "hostingPlanName": {
-      "value": "MyTestPlan01"
-    },
-    "serverFarmResourceGroup": {
-      "value": "Sol-Oracle-Test"
-    },
-    "alwaysOn": {
-      "value": false
-    },
-    "sku": {
-      "value": "Basic"
-    },
-    "skuCode": {
-      "value": "B1"
-    },
-    "workerSize": {
-      "value": "0"
-    },
-    "workerSizeId": {
-      "value": "0"
-    },
-    "numberOfWorkers": {
-      "value": 1
-    },
-    "linuxFxVersion": {
-      "value": "JAVA|11-java11"
-    },
-    "serverName": {
-      "value": "postgresrver"
-    },
-    "administratorLogin": {
-      "value": "mypgadmin"
-    },
-    "administratorLoginPassword": {
-      "value": null
-    },
-    "databaseSkuCapacity": {
-      "value": 4
-    },
-    "databaseSkuName": {
-      "value": "GP_Gen5_4"
-    },
-    "databaseSkuSizeMB": {
-      "value": 102400
-    },
-    "databaseSkuTier": {
-      "value": "GeneralPurpose"
-    },
-    "postgresqlVersion": {
-      "value": "10"
-    },
-    "databaseSkuFamily": {
-      "value": "Gen5"
-    },
-    "backupRetentionDays": {
-      "value": 7
-    },
-    "databaseGeoRedundantBackup": {
-      "value": "Disabled"
-    },
-    "databaseStorageAutoGrow": {
-      "value": "Disabled"
-    },
-    "databaseInfrastructureEncryption": {
-      "value": "Disabled"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "conferencedemo-90-web"
+        },
+        "hostingPlanName": {
+            "value": "myTestPlan01"
+        },
+        "alwaysOn": {
+            "value": false
+        },
+        "sku": {
+            "value": "Basic"
+        },
+        "workerSize": {
+            "value": "0"
+        },
+        "workerSizeId": {
+            "value": "0"
+        },
+        "numberOfWorkers": {
+            "value": 1
+        },
+        "linuxFxVersion": {
+            "value": "JAVA|11-java11"
+        },
+        "serverName": {
+            "value": "postgresrver"
+        },
+        "administratorLogin": {
+            "value": "mypgadmin"
+        },
+        "databaseSkuCapacity": {
+            "value": 4
+        },
+        "databaseSkuName": {
+            "value": "GP_Gen5_4"
+        },
+        "databaseSkuSizeMB": {
+            "value": 102400
+        },
+        "databaseSkuTier": {
+            "value": "GeneralPurpose"
+        },
+        "postgresqlVersion": {
+            "value": "10"
+        },
+        "databaseSkuFamily": {
+            "value": "Gen5"
+        },
+        "backupRetentionDays": {
+            "value": 7
+        },
+        "databaseGeoRedundantBackup": {
+            "value": "Disabled"
+        },
+      "databaseStorageAutoGrow": {
+        "value": "Disabled"
+      },
+        "databaseInfrastructureEncryption": {
+            "value": "Disabled"
+        }
     }
-  }
 }

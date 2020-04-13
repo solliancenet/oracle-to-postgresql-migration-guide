@@ -5,23 +5,10 @@
     "name": {
       "type": "string"
     },
-    "location": {
-      "defaultValue": "[resourceGroup().location]",
-      "type": "string",
-      "metadata": {
-        "description": "Location"
-      }
-    },
     "hostingPlanName": {
       "type": "string",
       "metadata": {
         "description": "Plan Name for Hosting"
-      }
-    },
-    "serverFarmResourceGroup": {
-      "type": "string",
-      "metadata": {
-        "description": "Enter Server Farm Resource Group"
       }
     },
     "alwaysOn": {
@@ -39,27 +26,6 @@
       "defaultValue": "Basic",
       "metadata": {
         "description": "SKU Name"
-      }
-    },
-    "skuCode": {
-      "allowedValues": [
-        "F1",
-        "D1",
-        "B1",
-        "B2",
-        "B3",
-        "S1",
-        "S2",
-        "S3",
-        "P1",
-        "P2",
-        "P3",
-        "P4"
-      ],
-      "defaultValue": "F1",
-      "type": "string",
-      "metadata": {
-        "description": "SKU Code"
       }
     },
     "workerSize": {
@@ -225,16 +191,39 @@
 
   },
   "variables": {
+
+    "location": "[resourceGroup().location]",
+    "serverfarmgroup": "[resourceGroup().name]",
     "subscriptionid": "[subscription().subscriptionId]",
-    "serverfarms_appsvc": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+    "serverfarms_appsvc": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', variables('serverfarmgroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
     "insightname": "[concat(parameters('name'), 'insight')]",
+    "skuValues": "[parameters('sku')]",
+    "skuGroup": {
+      "Free": {
+        "skuCode": "F1"
+      },
+      "Basic": {
+        "skuCode": "B1"
+      },
+      "Shared": {
+        "skuCode": "S1"
+      },
+      "Standard": {
+        "skuCode": "S2"
+      },
+      "Premium": {
+        "skuCode": "P1"
+      }
+    },
+
+    "skuName": "[variables('skuGroup')[variables('skuValues')]]",
     "databaseTags": {}
   },
   "resources": [
     {
       "apiVersion": "2017-12-01-preview",
       "kind": "",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "name": "[parameters('serverName')]",
       "properties": {
         "version": "[parameters('postgresqlVersion')]",
@@ -263,7 +252,7 @@
       "apiVersion": "2018-11-01",
       "name": "[parameters('hostingPlanName')]",
       "type": "Microsoft.Web/serverfarms",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "kind": "linux",
       "tags": {},
       "dependsOn": [],
@@ -277,14 +266,14 @@
       },
       "sku": {
         "Tier": "[parameters('sku')]",
-        "Name": "[parameters('skuCode')]"
+        "Name": "[variables('skuName').skuCode]"
       }
     },
     {
       "apiVersion": "2015-05-01",
       "name": "[variables('insightname')]",
       "type": "microsoft.insights/components",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": null,
       "properties": {
         "ApplicationId": "[parameters('name')]",
@@ -295,7 +284,7 @@
       "apiVersion": "2018-11-01",
       "name": "[parameters('name')]",
       "type": "Microsoft.Web/sites",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "kind": "app,linux",
       "tags": {},
       "dependsOn": [
@@ -359,7 +348,7 @@
       "type": "Microsoft.Web/sites/config",
       "apiVersion": "2018-11-01",
       "name": "[concat(parameters('name'), '/web')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
       ],
@@ -433,7 +422,7 @@
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
       "name": "[concat(parameters('name'), '/24b4d6a2b8bd972694d261c92dd3ad72edaf6c08')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
       ],
@@ -452,7 +441,7 @@
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
       "name": "[concat(parameters('name'), '/9bbc5f252d05925769cc203c06330ed190cd8ad7')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
       ],
@@ -471,7 +460,7 @@
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
       "name": "[concat(parameters('name'), '/9c30ad99cbfe8d235c092919d3c566a97ab98c65')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
       ],
@@ -490,7 +479,7 @@
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
       "name": "[concat(parameters('name'), '/da9c43254b47417989619aea163fd41e')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
       ],
@@ -509,7 +498,7 @@
       "type": "Microsoft.Web/sites/hostNameBindings",
       "apiVersion": "2018-11-01",
       "name": "[concat(parameters('name'), '/', parameters('name'), '.azurewebsites.net')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', parameters('name'))]"
       ],

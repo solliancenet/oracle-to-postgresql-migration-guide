@@ -1,8 +1,8 @@
 
 
-# Setting up the Oracle to PostgreSQL Migration Guide Sample Application
-- [Setting up the Oracle to PostgreSQL Migration Guide Sample Application](#setting-up-the-oracle-to-postgresql-migration-guide-sample-application)
-  - [Sample Application Architecture](#sample-application-architecture)
+# Setting up the Guide to Migrating a Java Oracle Application to Azure Database for PostgreSQL Sample Application
+- [Setting up the Guide to Migrating a Java Oracle Application to Azure Database for PostgreSQL Sample Application](#setting-up-the-guide-to-migrating-a-java-oracle-application-to-azure-database-for-postgresql-sample-application)
+  - [Starting Sample Application Architecture](#starting-sample-application-architecture)
   - [Oracle Database ER Diagram](#oracle-database-er-diagram)
   - [Git repo structure](#git-repo-structure)
   - [Installing the Oracle database](#installing-the-oracle-database)
@@ -12,19 +12,20 @@
     - [Set your development application runtime environment variables](#set-your-development-application-runtime-environment-variables)
     - [Test the Java API](#test-the-java-api)
   - [Installing and running the Angular application locally](#installing-and-running-the-angular-application-locally)
-    - [Summary](#summary)
-  - [Create and configure your Azure resources](#create-and-configure-your-azure-resources)
-    - [Run the ARM template](#run-the-arm-template)
+  - [Summary](#summary)
+  - [Migrating to the Cloud](#migrating-to-the-cloud)
+    - [Create and configure your Azure resources - Run the ARM template](#create-and-configure-your-azure-resources---run-the-arm-template)
     - [Capture the PostgreSQL configuration](#capture-the-postgresql-configuration)
   - [Set up your migration server and migrate the Oracle database to PostgreSQL](#set-up-your-migration-server-and-migrate-the-oracle-database-to-postgresql)
   - [Finish your Azure resource configuration](#finish-your-azure-resource-configuration)
     - [Update your secrets in Key Vault](#update-your-secrets-in-key-vault)
     - [Update your web application configuration settings with the Azure Key Vault secrets](#update-your-web-application-configuration-settings-with-the-azure-key-vault-secrets)
-  - [Deploy your Java API application to Azure](#deploy-your-java-api-application-to-azure)
-  - [Update your Angular application](#update-your-angular-application)
+  - [Deploy the Java API application to Azure](#deploy-the-java-api-application-to-azure)
+  - [Deploy the Angular application to Azure](#deploy-the-angular-application-to-azure)
+  - [Summary](#summary-1)
 
 
-## Sample Application Architecture
+## Starting Sample Application Architecture
 ![A diagram describing the architecture.](media/2020-03-26-15-09-15.png)
 
 This sample application utilizes the following frameworks and components. The reader is responsible for installing the dependencies.
@@ -34,7 +35,7 @@ This sample application utilizes the following frameworks and components. The re
 3. Maven 3.6.3
 4. Sprint Boot 2.2.5 RELEASE
 5. Embedded Tomcat
-6. Oracle 11g
+6. Oracle 11g Express Edition
 7. Azure Database for PostgreSQL 11.
 8. npm 6.4.x
 9. NodeJS 10.15.x
@@ -53,7 +54,7 @@ Navigate to the Git repo. You should see this structure.
 ![](media/2020-04-12-05-52-24.png)
 ## Installing the Oracle database
 
-In order to run the sample application, you need to have access to some instance of Oracle.  This application has been tested with 11g. The structure is basic enough to work on most versions.  To create your own Oracle instance locally, you can download a copy of Oracle Express Edition.  Also, it is recommended to install the SQLDeveloper client tool as well.  You can use any Oracle compatible client tool of choice.  Once you have access to the database instance, follow these steps.
+In order to run the sample application, you need to have access to some instance of Oracle.  This application has been tested with Oracle 11g XE. The structure is basic enough to work on most versions.  To create your own Oracle instance locally, you can download a copy of Oracle Express Edition.  Also, it is recommended to install the SQLDeveloper client tool as well.  You can use any Oracle compatible client tool of choice.  Once you have access to the database instance, follow these steps.
 
 Create the **REG_APP** user.
 
@@ -102,7 +103,7 @@ The blob fields will updated with the sample image.  Commit your changes.
 - DB_CONNECTION_URL - Connection to local Oracle database.
 - DB_USER_NAME - Oracle database user name.
 - DB_PASSWORD - Oracle database password.
-- ALLOWED_ORIGINS - e.g. http://localhost:4200
+- ALLOWED_ORIGINS - e.g. http://localhost:4200  (Default Angular development URL)
 
 >Note:  Your configuration values will be different.  The database user name should be the same.  Use strong passwords.
 
@@ -130,15 +131,15 @@ In your browser, navigate to:  http://localhost:8888/api/v1/events.
 
 ## Installing and running the Angular application locally
 
-This project requires NPM and NodeJS to be installed.
+This project requires NPM, NodeJS, and the Angular CLI to be installed.
 
-Install the Angular project dependencies.
+- Install the Angular project dependencies.
 
 ``` cmd
     npm install
 ```
 
-Build and run the application.
+- Build and run the application.
 
 ``` cmd
     ng serve -o
@@ -148,15 +149,15 @@ A web landing page similar to this should be visible:
 
 ![](media/2020-03-26-15-41-42.png)
 
-### Summary
+## Summary
 
-At this point, you have simulated the legacy application running on-premises. You are ready to start the migration process. Now, the Azure target environment will need to be created.
+At this point, you have simulated the legacy application running on-premises and the migration process can start . The Azure target environment will need to be created. The next section of this document will guide you through these steps.
 
-## Create and configure your Azure resources
+## Migrating to the Cloud
 
 Once you have tested the sample application locally, you will need to set up the Azure resources.  You will need to switch to the **conferencedemo-azure-psql** project.
 
-### Run the ARM template
+### Create and configure your Azure resources - Run the ARM template
 
 Navigate to the arm-template in the Git repo.  Select the **Deploy to Azure** button.
 
@@ -180,7 +181,7 @@ Set up your Firewall rules.  If you have a migration server VM that gets shut do
 
 ## Set up your migration server and migrate the Oracle database to PostgreSQL
 
-The basic tasks of migration have been listed below.  The task details have been discussed in the Oracle to PostgreSQL Migration Guide Word document.
+The basic tasks of migration have been listed below.  The task details have been discussed in the *A Guide to Migrating a Java Oracle Application to Azure Database for PostgreSQL* Word document.
 
 - Navigate to your migration server. It can be a VM or your local machine.
 - Install the ora2pg utility.
@@ -195,10 +196,10 @@ The basic tasks of migration have been listed below.  The task details have been
   - Export the rest of the Oracle schema objects and migrate them to the PostgreSQL database.
   - Update the procedure code to call the **reg_app** schema.
   - Update the procedures to work in PostgreSQL PL/pgSQL.
-    
+
     ![](media/2020-04-12-17-04-41.png)
   
-  
+
 The PostgreSQL database should be ready to test using the application.
 
 ## Finish your Azure resource configuration
@@ -228,21 +229,23 @@ The PostgreSQL database should be ready to test using the application.
 - Wrap the secrets with:
 @Microsoft.KeyVault(SecretUri=[Secret Identifier]).  See the example below.
 
-![](media/2020-04-12-09-57-53.png)
+  ![](media/2020-04-12-09-57-53.png)
 
 - Update your web configuration for DB_CONNECTION_URL, DB_USER_NAME, and DB_PASSWORD parameters.
 
   ![](media/2020-03-26-16-00-59.png)
 
-Your updated Application settings should look similar to this:
+  Your updated Application settings should look similar to this:
 
-![](media/2020-04-12-17-50-45.png)
+  ![](media/2020-04-12-17-50-45.png)
 
-Next, add your Angular web site URL to the ALLOWED_ORIGINS application setting. This setting will prevent CORS errors.
+- Next, add your Angular web site URL to the ALLOWED_ORIGINS application setting. This setting will prevent CORS errors. The Angular web site URL can be located in the conferencedemo-client web site overview.
 
-![](media/2020-04-12-19-22-40.png)
+  >Note: Do not include a trailing backslash.
 
-## Deploy your Java API application to Azure
+  ![](media/2020-04-12-19-22-40.png)
+
+## Deploy the Java API application to Azure
 
 Update the **conferencedemo-azure-psql** project to point to your deployed Azure resources.
 
@@ -252,51 +255,63 @@ Update the **conferencedemo-azure-psql** project to point to your deployed Azure
   - Update the **appName** with the Java API App web site name.
   - Update the **region** with the same region on the Java App API web site is deployed in.
   
-![](media/2020-04-12-10-41-41.png)
+  ![](media/2020-04-12-10-41-41.png)
 
-```cmd
-rem ## Create the JAR.
-mvn clean package
-```
+  ```cmd
+  rem ## Create the JAR.
+  mvn clean package
+  ```
 
-```cmd
-rem ## Deploy to Azure.
-mvn azure-webapp:deploy
-```
+  ```cmd
+  rem ## Deploy to Azure.
+  mvn azure-webapp:deploy
+  ```
 
-Example of a valid deployment messages from the console.
+  Example of a valid deployment messages from the console.
 
-![](media/2020-04-12-11-24-43.png)
+  ![](media/2020-04-12-11-24-43.png)
 
-- Test your deployment by calling an endpoint.
+- Test your deployment by calling an endpoint. e.g. http://[your java api url]/api/v1/events.
   
-![](media/2020-04-12-11-26-53.png)
+  ![](media/2020-04-12-11-26-53.png)
 
-- Check your logs
+- Check your Azure web site logs
 
-![](media/2020-04-12-11-33-03.png)
+  ![](media/2020-04-12-11-33-03.png)
 
-There should be Hibernate calls logged in the Azure web site logs. Use these entries for debugging purposes.
+  There should be Hibernate calls logged in the Azure web site logs. Use these entries for debugging purposes.
 
-![](media/2020-04-12-11-36-50.png)
+  ![](media/2020-04-12-11-36-50.png)
 
-More advanced logging can be found by selecting the Advanced Tools link.
+  More advanced logging can be found by selecting the Advanced Tools link.
 
-![](media/2020-04-12-12-34-50.png)
+  ![](media/2020-04-12-12-34-50.png)
 
-## Update your Angular application
+## Deploy the Angular application to Azure
 
 Once your know your Java API URL, it is time to update your Angular application production configuration.
 
-- Navigate to the **environment.prod.ts** file and update the webApiUrl with the API root URL.  Do not include backslash.
+- Navigate to the **environment.prod.ts** file and update the webApiUrl with the API root URL.  Do not include the ending backslash.
 
   ![](media/2020-04-12-17-15-27.png)
 
-- Build your Angular application using the production settings.
+- At the terminal console, build your Angular application using the production settings.
+
+  ```cmd
+  ng build --configuration=production
+  ```
 
   ![](media/2020-04-12-17-18-44.png)
 
 - Navigate to the Azure conferencedemo-client web site. Under **Development Tools**, select **Advanced Tools** in the left panel.
-- Open the Debug console using the CMD. Drag the Angular dist folder contents into the site root.
+- Open the Debug console using the **CMD**. Drag the Angular dist folder contents from the Windows Explorer into the site root.
   
   ![](media/2020-04-12-17-22-52.png)
+
+- Test your migrated web site. Navigate to the Angular web site URL.
+
+  ![](media/2020-04-13-08-45-44.png)
+
+## Summary
+
+At this point, the legacy application environment has been completely migrated to the Azure Cloud Hosted environment.

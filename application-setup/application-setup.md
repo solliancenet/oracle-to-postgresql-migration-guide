@@ -39,7 +39,7 @@ This sample application utilizes the following frameworks and components. The re
 7. Azure Database for PostgreSQL 11.
 8. npm 6.4.x
 9. NodeJS 10.15.x
-10. Angular CLI
+10. Angular CLI 9.1
 
 ## Oracle Database ER Diagram
 

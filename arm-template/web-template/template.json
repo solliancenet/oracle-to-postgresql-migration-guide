@@ -2,10 +2,10 @@
   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "name": {
+    "webSiteName": {
       "type": "string",
       "metadata": {
-        "description": "Web Site Name"
+        "description": "Unique API Web Site Name"
       }
     },
     "alwaysOn": {
@@ -193,10 +193,10 @@
 
     "location": "[resourceGroup().location]",
     "serverfarmgroup": "[resourceGroup().name]",
-    "hostingPlanName": "[concat(parameters('name'), '-HostPlan')]",
+    "hostingPlanName": "[concat(parameters('webSiteName'), '-HostPlan')]",
     "subscriptionid": "[subscription().subscriptionId]",
     "serverfarms_appsvc": "[concat('/subscriptions/', variables('subscriptionId'),'/resourcegroups/', variables('serverfarmgroup'), '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-    "insightname": "[concat(parameters('name'), 'insight')]",
+    "insightname": "[concat(parameters('webSiteName'), 'insight')]",
     "skuValues": "[parameters('sku')]",
     "skuGroup": {
       "Free": {
@@ -276,13 +276,13 @@
       "location": "[variables('location')]",
       "tags": null,
       "properties": {
-        "ApplicationId": "[parameters('name')]",
+        "ApplicationId": "[parameters('webSiteName')]",
         "Request_Source": "IbizaWebAppExtensionCreate"
       }
     },
     {
       "apiVersion": "2018-11-01",
-      "name": "[parameters('name')]",
+      "name": "[parameters('webSiteName')]",
       "type": "Microsoft.Web/sites",
       "location": "[variables('location')]",
       "kind": "app,linux",
@@ -292,16 +292,16 @@
         "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
       ],
       "properties": {
-        "name": "[parameters('name')]",
+        "name": "[parameters('webSiteName')]",
         "enabled": true,
         "hostNameSslStates": [
           {
-            "name": "[concat(parameters('name'), '.azurewebsites.net')]",
+            "name": "[concat(parameters('webSiteName'), '.azurewebsites.net')]",
             "sslState": "Disabled",
             "hostType": "Standard"
           },
           {
-            "name": "[concat(parameters('name'), '.scm.azurewebsites.net')]",
+            "name": "[concat(parameters('webSiteName'), '.scm.azurewebsites.net')]",
             "sslState": "Disabled",
             "hostType": "Repository"
           }
@@ -347,10 +347,10 @@
     {
       "type": "Microsoft.Web/sites/config",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/web')]",
+      "name": "[concat(parameters('webSiteName'), '/web')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
       ],
       "properties": {
         "numberOfWorkers": 1,
@@ -421,10 +421,10 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/24b4d6a2b8bd972694d261c92dd3ad72edaf6c08')]",
+      "name": "[concat(parameters('webSiteName'), '/24b4d6a2b8bd972694d261c92dd3ad72edaf6c08')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
       ],
       "properties": {
         "status": 4,
@@ -440,10 +440,10 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/9bbc5f252d05925769cc203c06330ed190cd8ad7')]",
+      "name": "[concat(parameters('webSiteName'), '/9bbc5f252d05925769cc203c06330ed190cd8ad7')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
       ],
       "properties": {
         "status": 4,
@@ -459,10 +459,10 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/9c30ad99cbfe8d235c092919d3c566a97ab98c65')]",
+      "name": "[concat(parameters('webSiteName'), '/9c30ad99cbfe8d235c092919d3c566a97ab98c65')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
       ],
       "properties": {
         "status": 4,
@@ -478,10 +478,10 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/da9c43254b47417989619aea163fd41e')]",
+      "name": "[concat(parameters('webSiteName'), '/da9c43254b47417989619aea163fd41e')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
       ],
       "properties": {
         "status": 4,
@@ -497,13 +497,13 @@
     {
       "type": "Microsoft.Web/sites/hostNameBindings",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('name'), '/', parameters('name'), '.azurewebsites.net')]",
+      "name": "[concat(parameters('webSiteName'), '/', parameters('webSiteName'), '.azurewebsites.net')]",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('name'))]"
+        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
       ],
       "properties": {
-        "siteName": "[parameters('name')]",
+        "siteName": "[parameters('webSiteName')]",
         "hostNameType": "Verified"
       }
     }

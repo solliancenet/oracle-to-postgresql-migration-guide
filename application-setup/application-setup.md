@@ -212,13 +212,17 @@ The PostgreSQL database should be ready to test using the application.
   
   These secrets will be injected into the Java application upon initialization.
 
-![](media/2020-03-26-15-55-13.png)
+  ![](media/2020-03-26-15-55-13.png)
 
->Note: To create a new version of the password secret, select the **New Version** button.  Store this new password securely for later use in other configuration files.
-  
-![](media/2020-03-26-15-58-16.png)
+  >Note: To create a new version of the password secret, select the **New Version** button.  Store this new password securely for later use in other configuration files.
+    
+  ![](media/2020-03-26-15-58-16.png)
 
 ### Update your web application configuration settings with the Azure Key Vault secrets
+
+- Make sure your Java API web application has access to your Key Vault. You will need to set up a policy. Adhere to the policy of least privilege by granting only Get access.
+
+  ![](media/2020-04-19-11-55-46.png)
 
 - Capture the Secret Identifier for each of the parameters.
   - Select the parameter.  Select the Current Version.

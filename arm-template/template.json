@@ -421,63 +421,6 @@
     {
       "type": "Microsoft.Web/sites/deployments",
       "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('webSiteName'), '/24b4d6a2b8bd972694d261c92dd3ad72edaf6c08')]",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
-      ],
-      "properties": {
-        "status": 4,
-        "author_email": "tim@tailoredtechsolutions.com",
-        "author": "thenning",
-        "deployer": "$conferencedemo-90",
-        "message": "test2",
-        "start_time": "2020-03-19T21:57:46.3709421Z",
-        "end_time": "2020-03-19T21:57:53.0723393Z",
-        "active": false
-      }
-    },
-    {
-      "type": "Microsoft.Web/sites/deployments",
-      "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('webSiteName'), '/9bbc5f252d05925769cc203c06330ed190cd8ad7')]",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
-      ],
-      "properties": {
-        "status": 4,
-        "author_email": "tim@tailoredtechsolutions.com",
-        "author": "$conferencedemo-90",
-        "deployer": "$conferencedemo-90",
-        "message": "test4",
-        "start_time": "2020-03-20T01:08:02.2395462Z",
-        "end_time": "2020-03-20T01:08:06.5509847Z",
-        "active": false
-      }
-    },
-    {
-      "type": "Microsoft.Web/sites/deployments",
-      "apiVersion": "2018-11-01",
-      "name": "[concat(parameters('webSiteName'), '/9c30ad99cbfe8d235c092919d3c566a97ab98c65')]",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
-      ],
-      "properties": {
-        "status": 4,
-        "author_email": "tim@tailoredtechsolutions.com",
-        "author": "$conferencedemo-90",
-        "deployer": "$conferencedemo-90",
-        "message": "test 3",
-        "start_time": "2020-03-19T22:14:05.5383798Z",
-        "end_time": "2020-03-19T22:14:13.2544332Z",
-        "active": false
-      }
-    },
-    {
-      "type": "Microsoft.Web/sites/deployments",
-      "apiVersion": "2018-11-01",
       "name": "[concat(parameters('webSiteName'), '/da9c43254b47417989619aea163fd41e')]",
       "location": "[variables('location')]",
       "dependsOn": [

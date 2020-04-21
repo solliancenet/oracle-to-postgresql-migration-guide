@@ -19,7 +19,7 @@
   - [Set up your migration server and migrate the Oracle database to PostgreSQL](#set-up-your-migration-server-and-migrate-the-oracle-database-to-postgresql)
   - [Finish your Azure resource configuration](#finish-your-azure-resource-configuration)
     - [Update your secrets in Key Vault](#update-your-secrets-in-key-vault)
-    - [Update your web application configuration settings with the Azure Key Vault secrets](#update-your-web-application-configuration-settings-with-the-azure-key-vault-secrets)
+    - [Update your web application configuration settings with the Azure Key Vault secret values](#update-your-web-application-configuration-settings-with-the-azure-key-vault-secret-values)
   - [Deploy the Java API application to Azure](#deploy-the-java-api-application-to-azure)
   - [Deploy the Angular application to Azure](#deploy-the-angular-application-to-azure)
   - [Summary](#summary-1)
@@ -163,21 +163,57 @@ Navigate to the arm-template in the Git repo.  Select the **Deploy to Azure** bu
 
 ![](media/2020-04-12-06-41-56.png)
 
-Fill out the parameters and select the **Purchase** button. Capture the database **Server name** and **Admin username** for later use.  You should create a ***strong*** password.  Using well known development passwords exposes your environment to brute force attacks and adds attack vectors.
+Fill out the parameters and select the **Purchase** button. Capture the database **Server name** and **Admin username** for later use.  You should create a ***strong*** password.  Using well known development passwords exposes your environment to brute force attacks and adds attack vectors. Copy the user name and password to a text editor. You need these values when you set up your Key Vault.  
 
 >Note:  This lab was tested using PostgreSQL 11.  Deploying a different version will bring different challenges.
 
+Once your base resources are created, create the Azure Key Vault in your resource group.
+
+- Set up the Managed Identity. Set the **Status** to On.
+
+  ![](media/2020-04-20-19-14-44.png)
+
+- Select the **Save** button. Select **Yes**.
+
+  ![](media/2020-04-20-19-16-55.png)
+
+- Add Access Policy.
+
+  ![](media/2020-04-20-19-23-55.png)
+
+- Select Get and List permissions for the Secrets.
+  - Select the service principal you just created.
+  
+  ![](media/2020-04-20-19-22-37.png)
+
+- Select the Add button.
+
+  ![](media/2020-04-20-19-26-33.png) 
+
+- Create your secrets.
+
+  - **yourdept-regapp-db-connectionurl** - Connection URL to PostgreSQL database.
+  - **yourdept-regapp-db-username** - PostgreSQL database admin user name.
+  - **yourdept-regapp-db-password** - PostgreSQL database password.
+  
+  ![](media/2020-04-20-19-31-31.png)
+
+
+
+
 ### Capture the PostgreSQL configuration
 
-Navigate to the **ora2pg-server** PostgreSQL server resource.  Select the **Overview** link.  
+- Navigate to the **ora2pg-server** PostgreSQL server resource.  Select the **Overview** link.  
 
-![](media/2020-03-26-15-50-35.png)
+  ![](media/2020-03-26-15-50-35.png)
 
-Set up your Firewall rules.  If you have a migration server VM that gets shut down at some point, you will have to edit the firewall rules every time you want to connect because you get a new IP address every time you start the VM.  On-premises development environments with test data may be ok with opening the firewall.  It is better to start off as secure as possible.
+- Set up your Firewall rules.  
+  
+  If you have a migration server VM that gets shut down at some point, you will have to edit the firewall rules every time you want to connect because you get a new IP address every time you start the VM.  On-premises development environments with test data may be ok with opening the firewall.  It is better to start off as secure as possible.
 
-**DO NOT USE THIS IP ADDRESS SETTING** if you have ***sensitive protected*** data in this database. It does not matter if it is test data.  If all of your connections are Azure resources, then consider ‘Allow access to Azure services’.
+  0.0.0.0 to 255.255.255.255, **DO NOT USE THIS IP ADDRESS SETTING** if you have ***sensitive protected*** data in this database. It does not matter if it is test data.
 
-![](media/2020-03-26-15-52-49.png)
+  ![](media/2020-03-26-15-52-49.png)
 
 ## Set up your migration server and migrate the Oracle database to PostgreSQL
 
@@ -214,13 +250,13 @@ The PostgreSQL database should be ready to test using the application.
 
   ![](media/2020-03-26-15-55-13.png)
 
-  >Note: To create a new version of the password secret, select the **New Version** button.  Store this new password securely for later use in other configuration files.
+  >Note: To create a new version of the password secret, select the **New Version** button.
     
   ![](media/2020-03-26-15-58-16.png)
 
-### Update your web application configuration settings with the Azure Key Vault secrets
+### Update your web application configuration settings with the Azure Key Vault secret values
 
-- Make sure your Java API web application has access to your Key Vault. You will need to set up a policy. Adhere to the policy of least privilege by granting only Get access.
+- Make sure your Java API web application has access to your Key Vault. You will need to set up a policy. Adhere to the policy of least privilege by granting only Get, List, and Decrypt access.
 
   ![](media/2020-04-19-11-55-46.png)
 
@@ -231,7 +267,7 @@ The PostgreSQL database should be ready to test using the application.
   ![](media/2020-04-12-09-54-05.png)
 
 - Wrap the secrets with:
-@Microsoft.KeyVault(SecretUri=[Secret Identifier]).  See the example below.
+@Microsoft.KeyVault(SecretUri=[Secret Identifier URL]).  See the example below.
 
   ![](media/2020-04-12-09-57-53.png)
 
@@ -319,3 +355,5 @@ Once your know your Java API URL, it is time to update your Angular application 
 ## Summary
 
 At this point, the legacy application environment has been completely migrated to the Azure Cloud Hosted environment.
+
+Delete your resource group when you are done.

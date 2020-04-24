@@ -1,5 +1,5 @@
-# Setting up the Guide to Migrating a Java Oracle Application to Azure Database for PostgreSQL Sample Application
-- [Setting up the Guide to Migrating a Java Oracle Application to Azure Database for PostgreSQL Sample Application](#setting-up-the-guide-to-migrating-a-java-oracle-application-to-azure-database-for-postgresql-sample-application)
+# Setup Guide for Migrating a Java Oracle Application to Azure Database for PostgreSQL Sample Application
+- [Setup Guide for Migrating a Java Oracle Application to Azure Database for PostgreSQL Sample Application](#setup-guide-for-migrating-a-java-oracle-application-to-azure-database-for-postgresql-sample-application)
   - [Starting Sample Application Architecture](#starting-sample-application-architecture)
   - [Oracle Database ER Diagram](#oracle-database-er-diagram)
   - [Git repo structure](#git-repo-structure)
@@ -196,7 +196,7 @@ Once you have tested the sample application locally, you will need to set up the
 
   ![The script shows how to create the resource group.](media/2020-04-23-16-00-58.png "Create Resource Group")
 
-- Create your resources.
+- Create your resources. You should see prompts in the console for your template parameter values. Below is an example of a successful output screen.
 
   ![The picture shows the script output for creating all of the resources](media/2020-04-23-16-07-20.png)
 
